@@ -10,7 +10,6 @@ interface Props extends NativeStackScreenProps<any, any> {}
 const LoginScreen = ({navigation}: Props) => {
   return (
     <SafeAreaView style={styles.box}>
-      <Text>LoginScreen</Text>
       <LoginForm
         onSubmit={() => {}}
         navigation={navigation}
@@ -24,7 +23,7 @@ const LoginScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   box: {
     flex: 1,
-    backgroundColor: COLORS.secondaryDark,
+    backgroundColor: COLORS.white,
   },
 });
 

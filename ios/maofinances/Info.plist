@@ -53,7 +53,7 @@
 	<false/>
   <key>UIAppFonts</key>
   <array>
-    <string>fonts/Ionicons.ttf</string>
+    <string>Ionicons.ttf</string>
   </array>
 </dict>
 </plist>
