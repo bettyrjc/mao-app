@@ -101,6 +101,9 @@ export const AuthProvider = ({ children }: any) => {
       });
       const data = response?.data;
       console.log('data', data);
+      // {"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZjI0ODc0Yi1hMjBhLTQyOTUtODc0Ni0xMDIzMjJiNzM2NDciLCJleHAiOjE3MDc0MTg4OTJ9.kMZgVtmYNojxpv8gqxu7W2ToKfXNgsbHAXpSEIk1uVA", 
+      // "expires_at": 1707418892,
+      // "user_id": "4f24874b-a20a-4295-8746-102322b73647"}
       // await AsyncStorage.setItem('token', data?.access_token);
       // await AsyncStorage.setItem('expires_at', JSON.stringify(data?.expires_at));
       // await AsyncStorage.setItem('refresh_token', data?.refresh_token);
