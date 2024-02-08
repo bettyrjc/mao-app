@@ -1,11 +1,10 @@
-import React, {createContext, useEffect, useReducer, useState} from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {authReducer, AuthState} from './authReducer';
-import {Alert} from 'react-native';
-import {useErrorsContext} from './ErrorsContext';
+import { authReducer, AuthState } from './authReducer';
+import { Alert } from 'react-native';
+import { useErrorsContext } from './ErrorsContext';
 import authApi from '../api/authApi';
-import {useUserContext} from './UserContext';
-import {useSearchContext} from './SearchContext';
+import { useUserContext } from './UserContext';
 
 type AuthContextProps = {
   errorMessage: string;
@@ -29,67 +28,50 @@ const authInicialState: AuthState = {
 
 export const AuthContext = createContext({} as AuthContextProps);
 
-export const AuthProvider = ({children}: any) => {
-  const {setUser, setIsFirstUser} = useUserContext();
-  const {setIsSearch, setSearch} = useSearchContext();
+export const AuthProvider = ({ children }: any) => {
+  const { setUser, setIsFirstUser } = useUserContext();
   const [state, dispatch] = useReducer(authReducer, authInicialState);
   const [isLoading, setIsLoading] = useState(false);
-  const {setErrors} = useErrorsContext();
+  const { setErrors } = useErrorsContext();
 
-  useEffect(() => {
-    if (state.status === 'not-authenticated') {
-      return;
-    }
-    checkToken();
-  }, [state]);
+  // useEffect(() => {
+  //   if (state.status === 'not-authenticated') {
+  //     return;
+  //   }
+  //   checkToken();
+  // }, [state]);
 
-  const checkToken = async () => {
-    const token: any = await AsyncStorage.getItem('token');
-    const expires_at: any = await AsyncStorage.getItem('expires_at');
-    const refresh_token: any = await AsyncStorage.getItem('refresh_token');
-    const user: any = await AsyncStorage.getItem('user');
+  // const checkToken = async () => {
+  //   const token: any = await AsyncStorage.getItem('token');
+  //   const expires_at: any = await AsyncStorage.getItem('expires_at');
+  //   const refresh_token: any = await AsyncStorage.getItem('refresh_token');
+  //   const user: any = await AsyncStorage.getItem('user');
 
-    if (!token || !expires_at || !refresh_token) {
-      return dispatch({type: 'notAuthenticated'});
-    }
-    dispatch({
-      type: 'signIn',
-      payload: {
-        token,
-        refresh_token,
-        user,
-      },
-    });
-  };
+  //   if (!token || !expires_at || !refresh_token) {
+  //     return dispatch({ type: 'notAuthenticated' });
+  //   }
+  //   dispatch({
+  //     type: 'signIn',
+  //     payload: {
+  //       token,
+  //       refresh_token,
+  //       user,
+  //     },
+  //   });
+  // };
 
   const signUp = async (info: any) => {
-    const {
-      name,
-      last_name,
-      cellphone_number,
-      email,
-      password,
-      team_size,
-      contracts_per_month,
-      work_location_state,
-      cellphone_number_prefix,
-    } = info;
+    const { name, last_name, email, pronounm, password } = info;
     setIsLoading(true);
 
     try {
-      await authApi.post<any>('/api/v2/brokers', {
+      await authApi.post<any>('/api/v1/sign-up', {
         user_attributes: {
           name,
           last_name,
-          cellphone_number,
-          cellphone_number_prefix,
           email,
           password,
-          broker_profile_attributes: {
-            team_size,
-            contracts_per_month,
-            work_location_state,
-          },
+          pronounm,
         },
       });
       dispatch({
@@ -110,33 +92,29 @@ export const AuthProvider = ({children}: any) => {
   };
 
   const signIn = async (info: any) => {
-    const {username, password} = info;
+    const { username, password } = info;
     setIsLoading(true);
     try {
-      const response = await authApi.post<any>('/oauth/token', {
+      const response = await authApi.post<any>('/api/v1/sign-in', {
         username: username,
         password: password,
-        grant_type: 'password',
-        role: 'broker',
       });
       const data = response?.data;
-      await AsyncStorage.setItem('token', data?.access_token);
-      await AsyncStorage.setItem(
-        'expires_at',
-        JSON.stringify(data?.expires_at),
-      );
-      await AsyncStorage.setItem('refresh_token', data?.refresh_token);
-      await AsyncStorage.setItem('user', JSON.stringify(data?.user));
-      setUser(data?.user);
-      setIsFirstUser(data?.first_login);
-      dispatch({
-        type: 'signIn',
-        payload: {
-          token: data?.access_token,
-          user: data?.user,
-          refresh_token: data?.refresh_token,
-        },
-      });
+      console.log('data', data);
+      // await AsyncStorage.setItem('token', data?.access_token);
+      // await AsyncStorage.setItem('expires_at', JSON.stringify(data?.expires_at));
+      // await AsyncStorage.setItem('refresh_token', data?.refresh_token);
+      // await AsyncStorage.setItem('user', JSON.stringify(data?.user));
+      // setUser(data?.user);
+      // setIsFirstUser(data?.first_login);
+      // dispatch({
+      //   type: 'signIn',
+      //   payload: {
+      //     token: data?.access_token,
+      //     user: data?.user,
+      //     refresh_token: data?.refresh_token,
+      //   },
+      // });
 
       setIsLoading(false);
     } catch (error: any) {
@@ -155,14 +133,12 @@ export const AuthProvider = ({children}: any) => {
     await AsyncStorage.removeItem('refresh_token');
     await AsyncStorage.removeItem('user');
     await AsyncStorage.removeItem('pressed');
-    setIsSearch(null);
-    dispatch({type: 'logout'});
+    dispatch({ type: 'logout' });
     setUser(null);
-    setSearch(null);
   };
 
   const removeError = () => {
-    dispatch({type: 'removeError'});
+    dispatch({ type: 'removeError' });
   };
 
   return (
@@ -174,7 +150,8 @@ export const AuthProvider = ({children}: any) => {
         logOut,
         removeError,
         isLoading,
-      }}>
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -88,7 +88,9 @@ const LoginForm = ({
           <Text style={styles.buttonRegisters}> Regístrate</Text>
         </Text>
       </TouchableOpacity>
-
+      <Pressable onPress={handleOpenModal}>
+        <Text style={styles.forgetPassword}>¿Se te olvidó la contraseña?</Text>
+      </Pressable>
       <View style={styles.containedButton}>
         <ContainedButton
           onPress={handleSubmit(onSubmit)}
@@ -97,12 +99,6 @@ const LoginForm = ({
           isFulled={false}
           isLoading={isLoading}
         />
-
-        <Pressable onPress={handleOpenModal}>
-          <Text style={styles.forgetPassword}>
-            ¿Se te olvidó la contraseña?
-          </Text>
-        </Pressable>
       </View>
     </View>
   );
@@ -116,7 +112,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonRegisters: {
-    color: COLORS.secondaryDark,
+    color: COLORS.secondary,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },
@@ -129,7 +125,7 @@ const styles = StyleSheet.create({
   forgetPassword: {
     color: COLORS.warning,
     fontWeight: 'bold',
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 10,
     paddingBottom: 10,
     fontSize: 14,

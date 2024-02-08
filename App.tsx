@@ -1,22 +1,28 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StyleSheet} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
 import Navigator from './src/navigator/Navigator';
 // import {AuthProvider} from './src/context/AuthContext';
-import {ErrorsProvider} from './src/context/ErrorsContext';
+import { ErrorsProvider } from './src/context/ErrorsContext';
+import { AuthProvider } from './src/context/AuthContext';
+import { UserProvider } from './src/context/UserContext';
 // import {UserProvider} from './src/context/UserContext';
 // import {ItemPressProvider} from './src/context/ItemPressContext';
 // import {SearchBarProvider} from './src/context/SearchContext';
 const queryClient = new QueryClient();
 
-const AppState = ({children}: any) => {
+const AppState = ({ children }: any) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ErrorsProvider>{children}</ErrorsProvider>
+      <ErrorsProvider>
+        <UserProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </UserProvider>
+      </ErrorsProvider>
     </QueryClientProvider>
   );
 };
