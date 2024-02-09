@@ -9,7 +9,7 @@ import { useUserContext } from './UserContext';
 type AuthContextProps = {
   errorMessage: string;
   token: string | null;
-  user: any;
+  user_id: any;
   status: 'checking' | 'authenticated' | 'not-authenticated' | 'registered';
   signUp: (loginData: any) => void;
   signIn: (loginData: any) => void;
@@ -18,18 +18,18 @@ type AuthContextProps = {
   isLoading: boolean;
 };
 
-const authInicialState: AuthState = {
+export const authInicialState: AuthState = {
   status: 'checking',
   token: null,
   refresh_token: null,
-  user: null,
+  user_id: null,
   errorMessage: '',
 };
 
 export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: any) => {
-  const { setUser, setIsFirstUser } = useUserContext();
+  const { setUser } = useUserContext();
   const [state, dispatch] = useReducer(authReducer, authInicialState);
   const [isLoading, setIsLoading] = useState(false);
   const { setErrors } = useErrorsContext();
@@ -61,33 +61,30 @@ export const AuthProvider = ({ children }: any) => {
   // };
 
   const signUp = async (info: any) => {
-    const { name, last_name, email, pronounm, password } = info;
+    const { name, last_name, email, pronounm, password, id } = info;
     setIsLoading(true);
-
     try {
       await authApi.post<any>('/api/v1/sign-up', {
-        user_attributes: {
-          name,
-          last_name,
-          email,
-          password,
-          pronounm,
-        },
+        id,
+        name,
+        last_name,
+        email,
+        password,
+        pronounm,
       });
       dispatch({
         type: 'signUp',
         payload: 'Registro exitoso',
       });
-      setErrors([]);
-      await signIn({
-        username: email,
-        password,
-      });
+      // await signIn({
+      //   username: email,
+      //   password,
+      // });
     } catch (error: any) {
-      console.log('error?.response.data.errors', error?.response.data.errors);
-      Alert.alert('Error😔', error?.response.data.errors?.[0].detail);
+      console.log('error?.response.data.errors', error);
+      // Alert.alert('Error😔', error);
       setIsLoading(false);
-      setErrors(error.response.data.errors);
+      // setErrors(error);
     }
   };
 
@@ -100,24 +97,17 @@ export const AuthProvider = ({ children }: any) => {
         password: password,
       });
       const data = response?.data;
-      console.log('data', data);
-      // {"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZjI0ODc0Yi1hMjBhLTQyOTUtODc0Ni0xMDIzMjJiNzM2NDciLCJleHAiOjE3MDc0MTg4OTJ9.kMZgVtmYNojxpv8gqxu7W2ToKfXNgsbHAXpSEIk1uVA", 
-      // "expires_at": 1707418892,
-      // "user_id": "4f24874b-a20a-4295-8746-102322b73647"}
-      // await AsyncStorage.setItem('token', data?.access_token);
-      // await AsyncStorage.setItem('expires_at', JSON.stringify(data?.expires_at));
-      // await AsyncStorage.setItem('refresh_token', data?.refresh_token);
-      // await AsyncStorage.setItem('user', JSON.stringify(data?.user));
-      // setUser(data?.user);
-      // setIsFirstUser(data?.first_login);
-      // dispatch({
-      //   type: 'signIn',
-      //   payload: {
-      //     token: data?.access_token,
-      //     user: data?.user,
-      //     refresh_token: data?.refresh_token,
-      //   },
-      // });
+      await AsyncStorage.setItem('token', data?.access_token);
+      await AsyncStorage.setItem('expires_at', JSON.stringify(data?.expires_at));
+      await AsyncStorage.setItem('user_id', JSON.stringify(data?.user_id));
+      dispatch({
+        type: 'signIn',
+        payload: {
+          token: data?.access_token,
+          user_id: data?.user_id,
+          refresh_token: '',
+        },
+      });
 
       setIsLoading(false);
     } catch (error: any) {
@@ -133,9 +123,7 @@ export const AuthProvider = ({ children }: any) => {
   const logOut = async () => {
     await AsyncStorage.removeItem('token');
     await AsyncStorage.removeItem('expires_at');
-    await AsyncStorage.removeItem('refresh_token');
-    await AsyncStorage.removeItem('user');
-    await AsyncStorage.removeItem('pressed');
+    await AsyncStorage.removeItem('user_id');
     dispatch({ type: 'logout' });
     setUser(null);
   };

@@ -15,28 +15,6 @@ export function useUserContext() {
 
 export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isFirstUser, setIsFirstUser] = useState(false);
-  const [isLoadingUser, setIsLoadingUser] = useState(false);
-  useEffect(() => {
-    const getUser = async () => {
-      setIsLoadingUser(true);
-      try {
-        const userStorage: any = await AsyncStorage.getItem('user');
-        const parserUser = JSON.parse(userStorage);
-        setUser(parserUser);
-        setIsLoadingUser(false);
-      } catch (error) {
-        setIsLoadingUser(false);
 
-        console.error('Error al obtener el usuario:', error);
-      }
-    };
-    getUser();
-  }, []);
-
-  return (
-    <UserContext.Provider value={{ user, isLoadingUser, setUser, setIsFirstUser, isFirstUser }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };

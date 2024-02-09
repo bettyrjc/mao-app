@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, {createContext, FC, ReactNode, useContext, useState} from 'react';
+import React, { createContext, FC, ReactNode, useContext, useState } from 'react';
 
 type Error = {
   detail: string;
@@ -23,24 +23,12 @@ export function useErrorsContext() {
   return context;
 }
 
-export const ErrorsProvider: FC<{children: ReactNode}> = ({children}) => {
+export const ErrorsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [error, setError] = useState<Record<any, any>>({});
 
   const setErrors = (errorArray: Error[]) => {
-    const errorObject: Record<any, any> = errorArray.reduce((acc, error) => {
-      if (error.source) {
-        acc[error.source] = error.detail;
-      }
-
-      return acc;
-    }, {});
-
-    setError(errorObject);
+    setError(errorArray);
   };
 
-  return (
-    <ErrorsContext.Provider value={{error, setErrors}}>
-      {children}
-    </ErrorsContext.Provider>
-  );
+  return <ErrorsContext.Provider value={{ error, setErrors }}>{children}</ErrorsContext.Provider>;
 };

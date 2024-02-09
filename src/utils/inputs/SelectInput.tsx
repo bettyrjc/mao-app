@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import {COLORS, GRAY_COLORS} from '../../constants';
+import { COLORS, GRAY_COLORS } from '../../constants';
 import IconIon from 'react-native-vector-icons/Ionicons';
 type SelectInputProps = {
   label?: string;
-  options: {label: any; value: any}[];
+  options: { label: any; value: any }[];
   selectedValue: string;
   placeholder: string;
   onValueChange: (value: string) => void;
@@ -17,9 +17,7 @@ type SelectInputProps = {
   isFilteredInput?: boolean;
   isPadding?: boolean;
 };
-const IconInput = () => (
-  <IconIon name="chevron-down-outline" size={20} color={GRAY_COLORS.gray500} />
-);
+const IconInput = () => <IconIon name="chevron-down-outline" size={20} color={GRAY_COLORS.gray500} />;
 
 const SelectInput = ({
   label,
@@ -104,18 +102,14 @@ const SelectInput = ({
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <View
-        style={[
-          styles.containerInput,
-          isBorderFull ? styles.borderFull : styles.borderBottom,
-        ]}>
+      <View style={[styles.containerInput, isBorderFull ? styles.borderFull : styles.borderBottom]}>
         {isFilteredInput && (
           <View style={styles.inputFilter}>
             <IconIon name="funnel" size={18} color={GRAY_COLORS.gray500} />
           </View>
         )}
         <RNPickerSelect
-          placeholder={{label: placeholder, value: null}}
+          placeholder={{ label: placeholder, value: null }}
           items={options}
           value={selectedValue}
           onValueChange={onValueChange}

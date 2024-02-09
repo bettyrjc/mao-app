@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LoginForm from '../utils/forms/LoginForm';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthContext } from '../context/AuthContext';
-interface Props extends NativeStackScreenProps<any, any> { }
+interface Props extends NativeStackScreenProps<any, any> {}
 
 const LoginScreen = ({ navigation }: Props) => {
   const { signIn, isLoading } = useContext(AuthContext);
@@ -13,8 +13,8 @@ const LoginScreen = ({ navigation }: Props) => {
   const onSubmit = (data: any) => {
     const { username, password } = data;
     signIn({
-      username, //: 'andrea+broker1@mica.rent',
-      password, //: 'Micatest123*',
+      username,
+      password,
     });
   };
   return (

@@ -1,13 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
-import {validator} from './validator';
+import { validator } from './validator';
 import InputText from '../inputs/InputText';
 import ContainedButton from '../buttons/ContainedButton';
-import {COLORS, GRAY_COLORS} from '../../constants';
+import { COLORS, GRAY_COLORS } from '../../constants';
 import PasswordInput from '../inputs/PasswordInput';
-import {useErrorsContext} from '../../context/ErrorsContext';
+import { useErrorsContext } from '../../context/ErrorsContext';
+import SelectInput from '../inputs/SelectInput';
 
 // const convertOptions = (teamSize: any) =>
 //   Object.entries(teamSize).map(item => ({
@@ -24,7 +25,7 @@ const schema = Yup.object().shape({
     .required('El nombre es requerido')
     .matches(/^[A-Za-z]+$/, 'El nombre solo debe contener letras')
     .trim('El nombre es requerido'),
-
+  pronoun: Yup.string().required('El pronomnbre es requerido'),
   last_name: Yup.string()
     .required('El apellido es requerido')
     .matches(/^[A-Za-z]+$/, 'El apellido solo debe contener letras')
@@ -36,14 +37,14 @@ type FormData = {
   navigation: any;
   isLoading: boolean;
 };
-const RegisterForm = ({onSubmit, navigation, isLoading}: FormData) => {
-  const {error, setErrors} = useErrorsContext();
+const RegisterForm = ({ onSubmit, navigation, isLoading }: FormData) => {
+  const { error, setErrors } = useErrorsContext();
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
-    resolver: data => validator(data, schema),
+    resolver: (data) => validator(data, schema),
   });
 
   return (
@@ -51,10 +52,10 @@ const RegisterForm = ({onSubmit, navigation, isLoading}: FormData) => {
       <Controller
         control={control}
         name="name"
-        render={({field: {onChange, value}}) => (
+        render={({ field: { onChange, value } }) => (
           <InputText
             value={value}
-            onChangeText={text => onChange(text)}
+            onChangeText={(text) => onChange(text)}
             error={errors.name?.message || error.name}
             placeholder="Maria"
             label="Nombre"
@@ -66,10 +67,10 @@ const RegisterForm = ({onSubmit, navigation, isLoading}: FormData) => {
       <Controller
         control={control}
         name="last_name"
-        render={({field: {onChange, value}}) => (
+        render={({ field: { onChange, value } }) => (
           <InputText
             value={value}
-            onChangeText={text => onChange(text)}
+            onChangeText={(text) => onChange(text)}
             error={errors.last_name?.message || error?.last_name}
             placeholder="Perez"
             label="Apellido"
@@ -80,12 +81,29 @@ const RegisterForm = ({onSubmit, navigation, isLoading}: FormData) => {
 
       <Controller
         control={control}
+        name="pronoun"
+        render={({ field: { onChange, value } }) => (
+          <SelectInput
+            label="Pronombre"
+            options={[
+              { label: 'El', value: 'he' },
+              { label: 'Ella', value: 'she' },
+            ]}
+            selectedValue={value}
+            onValueChange={(selectedValue) => onChange(selectedValue)}
+            placeholder="Seleciona"
+            error={errors.pronoun?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
         name="email"
-        render={({field: {onChange, value}}) => (
+        render={({ field: { onChange, value } }) => (
           <InputText
             value={value}
             keyboardType="email-address"
-            onChangeText={text => onChange(text)}
+            onChangeText={(text) => onChange(text)}
             error={errors.email?.message || error.email}
             placeholder="maria@gmail.com"
             label="Correo electrónico"
@@ -98,10 +116,10 @@ const RegisterForm = ({onSubmit, navigation, isLoading}: FormData) => {
       <Controller
         control={control}
         name="password"
-        render={({field: {onChange, value}}) => (
+        render={({ field: { onChange, value } }) => (
           <PasswordInput
             value={value}
-            onChangeText={text => onChange(text)}
+            onChangeText={(text) => onChange(text)}
             error={errors.password?.message || error.password}
           />
         )}
@@ -111,7 +129,8 @@ const RegisterForm = ({onSubmit, navigation, isLoading}: FormData) => {
         onPress={() => {
           setErrors([]);
           navigation.replace('LoginScreen');
-        }}>
+        }}
+      >
         <Text style={styles.buttonRegisterContained}>
           ¿Ya tienes cuenta?
           <Text style={styles.buttonRegisters}> Inicia sesión</Text>

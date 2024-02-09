@@ -2,13 +2,13 @@ export interface AuthState {
   status: 'checking' | 'authenticated' | 'not-authenticated' | 'registered';
   token: string | null;
   errorMessage: string;
-  user: any | null;
+  user_id: any | null;
   refresh_token: string | null;
 }
 
 export type AuthAction =
   | { type: 'signUp'; payload: string }
-  | { type: 'signIn'; payload: { token: string; user: any; refresh_token: string } }
+  | { type: 'signIn'; payload: { token: string; user_id: any; refresh_token: string } }
   | { type: 'addError'; payload: string }
   | { type: 'removeError' }
   | { type: 'notAuthenticated' }
@@ -19,7 +19,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
     case 'addError':
       return {
         ...state,
-        user: null,
+        user_id: null,
         status: 'not-authenticated',
         token: null,
         errorMessage: action.payload,
@@ -37,8 +37,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
         errorMessage: '',
         status: 'authenticated',
         token: action.payload.token,
-        refresh_token: action.payload.refresh_token,
-        user: action.payload.user,
+        user_id: action.payload.user_id,
       };
     case 'signUp':
       return {
@@ -52,7 +51,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
         ...state,
         status: 'not-authenticated',
         token: null,
-        user: null,
+        user_id: null,
         refresh_token: null,
       };
 
