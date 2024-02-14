@@ -15,21 +15,6 @@ export type AuthAction =
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case 'addError':
-      return {
-        ...state,
-        user_id: null,
-        status: 'not-authenticated',
-        token: null,
-        errorMessage: action.payload,
-      };
-
-    case 'removeError':
-      return {
-        ...state,
-        errorMessage: '',
-      };
-
     case 'signIn':
       return {
         ...state,

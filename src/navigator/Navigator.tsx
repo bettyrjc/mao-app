@@ -4,15 +4,16 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import { AuthContext } from '../context/AuthContext';
 import ProtectedNavigator from './ProtectedNavigator';
+import LoadingScreen from '../screens/LoadingScreen';
 
 const Stack = createStackNavigator();
 
 const Navigator = () => {
   const { status } = useContext(AuthContext);
-  console.log('status', status)
-  // if (status === 'checking') {
-  //   return <Text>Hola</Text>;
-  // }
+  console.log('status', status);
+  if (status === 'checking') {
+    return <LoadingScreen />;
+  }
   if (status === 'authenticated') {
     return <ProtectedNavigator />;
   }

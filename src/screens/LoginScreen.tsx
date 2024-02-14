@@ -22,7 +22,7 @@ const LoginScreen = ({ navigation }: Props) => {
       <View style={styles.boxImage}>
         <Image source={require('../assets/budget.png')} />
       </View>
-      <LoginForm onSubmit={onSubmit} navigation={navigation} handleOpenModal={() => { }} isLoading={isLoading} />
+      <LoginForm onSubmit={onSubmit} navigation={navigation} handleOpenModal={() => {}} isLoading={isLoading} />
     </SafeAreaView>
   );
 };

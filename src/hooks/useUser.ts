@@ -11,8 +11,8 @@ export function useUser() {
     const id = JSON.parse(userId);
     try {
       const data = await financeApi.get(`/api/v1/users/${id}`);
-      console.log(data?.data);
-      setUser(data?.data);
+      console.log('data useUser', data);
+      setUser(data);
       return data?.data;
     } catch (e: any) {
       console.log('error getUser', e.response);

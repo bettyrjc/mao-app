@@ -1,4 +1,5 @@
-import React, { createContext, useReducer, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { createContext, useEffect, useReducer, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { authReducer, AuthState } from './authReducer';
 import { Alert } from 'react-native';
@@ -20,7 +21,7 @@ type AuthContextProps = {
 };
 
 export const authInicialState: AuthState = {
-  status: 'checking',
+  status: 'not-authenticated',
   token: null,
   user_id: null,
   errorMessage: '',
@@ -34,6 +35,31 @@ export const AuthProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const { setErrors } = useErrorsContext();
   console.error('state.status', state.status);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        const user_id = await AsyncStorage.getItem('user_id');
+        if (token && user_id) {
+          dispatch({
+            type: 'signIn',
+            payload: {
+              token,
+              user_id: JSON.parse(user_id),
+            },
+          });
+          getUser(JSON.parse(user_id));
+        } else {
+          dispatch({ type: 'notAuthenticated' });
+        }
+      } catch (error) {
+        console.error('Error retrieving authentication state:', error);
+      }
+    };
+
+    checkAuthentication();
+  }, []);
 
   const signUp = async (info: any) => {
     const { name, last_name, email, pronounm, password, id } = info;
@@ -67,7 +93,7 @@ export const AuthProvider = ({ children }: any) => {
     try {
       const data = await financeApi.get(`/api/v1/users/${id}`);
       setUser(data);
-      await AsyncStorage.setItem('user_id', JSON.stringify(data));
+      await AsyncStorage.setItem('data', JSON.stringify(data));
       console.log('data get user', data);
       return data;
     } catch (e: any) {
@@ -94,8 +120,8 @@ export const AuthProvider = ({ children }: any) => {
           user_id: data?.user_id,
         },
       });
-      setIsLoading(false);
       getUser(data?.user_id);
+      setIsLoading(false);
     } catch (error: any) {
       console.log('_______error sign in_______', error?.response.data.errors);
 
