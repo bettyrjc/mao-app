@@ -3,12 +3,11 @@ export interface AuthState {
   token: string | null;
   errorMessage: string;
   user_id: any | null;
-  refresh_token: string | null;
 }
 
 export type AuthAction =
   | { type: 'signUp'; payload: string }
-  | { type: 'signIn'; payload: { token: string; user_id: any; refresh_token: string } }
+  | { type: 'signIn'; payload: { token: string; user_id: any } }
   | { type: 'addError'; payload: string }
   | { type: 'removeError' }
   | { type: 'notAuthenticated' }
@@ -52,7 +51,6 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
         status: 'not-authenticated',
         token: null,
         user_id: null,
-        refresh_token: null,
       };
 
     default:

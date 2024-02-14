@@ -5,6 +5,7 @@ import { Alert } from 'react-native';
 import { useErrorsContext } from './ErrorsContext';
 import authApi from '../api/authApi';
 import { useUserContext } from './UserContext';
+import financeApi from '../api/financeApi';
 
 type AuthContextProps = {
   errorMessage: string;
@@ -21,7 +22,6 @@ type AuthContextProps = {
 export const authInicialState: AuthState = {
   status: 'checking',
   token: null,
-  refresh_token: null,
   user_id: null,
   errorMessage: '',
 };
@@ -33,32 +33,7 @@ export const AuthProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(authReducer, authInicialState);
   const [isLoading, setIsLoading] = useState(false);
   const { setErrors } = useErrorsContext();
-
-  // useEffect(() => {
-  //   if (state.status === 'not-authenticated') {
-  //     return;
-  //   }
-  //   checkToken();
-  // }, [state]);
-
-  // const checkToken = async () => {
-  //   const token: any = await AsyncStorage.getItem('token');
-  //   const expires_at: any = await AsyncStorage.getItem('expires_at');
-  //   const refresh_token: any = await AsyncStorage.getItem('refresh_token');
-  //   const user: any = await AsyncStorage.getItem('user');
-
-  //   if (!token || !expires_at || !refresh_token) {
-  //     return dispatch({ type: 'notAuthenticated' });
-  //   }
-  //   dispatch({
-  //     type: 'signIn',
-  //     payload: {
-  //       token,
-  //       refresh_token,
-  //       user,
-  //     },
-  //   });
-  // };
+  console.error('state.status', state.status);
 
   const signUp = async (info: any) => {
     const { name, last_name, email, pronounm, password, id } = info;
@@ -88,6 +63,18 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
+  const getUser = async (id: string) => {
+    try {
+      const data = await financeApi.get(`/api/v1/users/${id}`);
+      setUser(data);
+      await AsyncStorage.setItem('user_id', JSON.stringify(data));
+      console.log('data get user', data);
+      return data;
+    } catch (e: any) {
+      console.log('error getUser', e.response);
+    }
+  };
+
   const signIn = async (info: any) => {
     const { username, password } = info;
     setIsLoading(true);
@@ -105,13 +92,12 @@ export const AuthProvider = ({ children }: any) => {
         payload: {
           token: data?.access_token,
           user_id: data?.user_id,
-          refresh_token: '',
         },
       });
-
       setIsLoading(false);
+      getUser(data?.user_id);
     } catch (error: any) {
-      console.log('_______error_______', error);
+      console.log('_______error sign in_______', error?.response.data.errors);
 
       setIsLoading(false);
       console.log(error?.response.data.errors);

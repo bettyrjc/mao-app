@@ -1,13 +1,13 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { useUser } from '../hooks/useUser';
+import { useUserContext } from '../context/UserContext';
 
 const DashboardScreen = () => {
-  const { data } = useUser();
-  console.log('data fff', data);
+  const { user } = useUserContext();
+  console.log('data fff', user);
   return (
     <View>
-      <Text>{data?.name}</Text>
+      <Text>{user?.name}</Text>
     </View>
   );
 };

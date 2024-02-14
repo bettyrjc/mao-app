@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
@@ -6,8 +6,10 @@ import { AuthContext } from '../context/AuthContext';
 import ProtectedNavigator from './ProtectedNavigator';
 
 const Stack = createStackNavigator();
+
 const Navigator = () => {
   const { status } = useContext(AuthContext);
+  console.log('status', status)
   // if (status === 'checking') {
   //   return <Text>Hola</Text>;
   // }
