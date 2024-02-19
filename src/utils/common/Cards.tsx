@@ -1,15 +1,13 @@
 import React from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
-import {COLORS, GRAY_COLORS} from '../../constants';
+import { Platform, StyleSheet, View } from 'react-native';
+import { COLORS, GRAY_COLORS } from '../../constants';
 
 type CardType = {
   children: any;
   bgColor?: string;
 };
-const Cards = ({children, bgColor = COLORS.white}: CardType) => {
-  return (
-    <View style={{...styles.card, backgroundColor: bgColor}}>{children}</View>
-  );
+const Cards = ({ children, bgColor = COLORS.white }: CardType) => {
+  return <View style={{ ...styles.card, backgroundColor: bgColor }}>{children}</View>;
 };
 
 export const styles = StyleSheet.create({

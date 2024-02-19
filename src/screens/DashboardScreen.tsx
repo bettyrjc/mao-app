@@ -1,7 +1,9 @@
-import { View, Text, Pressable } from 'react-native';
+import { Text, Pressable, StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
 import { useUserContext } from '../context/UserContext';
 import { AuthContext } from '../context/AuthContext';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS } from '../constants';
 
 const DashboardScreen = () => {
   // const { data } = useUser();
@@ -13,7 +15,7 @@ const DashboardScreen = () => {
   const { user } = useUserContext();
   console.log('data fff', user);
   return (
-    <View>
+    <SafeAreaView style={styles.box}>
       <Text>
         {user?.name} {user?.last_name}
       </Text>
@@ -21,8 +23,15 @@ const DashboardScreen = () => {
       <Pressable onPress={onSubmit}>
         <Text>Logout</Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  box: {
+    flex: 1,
+    paddingHorizontal: 4,
+  },
+});
 
 export default DashboardScreen;

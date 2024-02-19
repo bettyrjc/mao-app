@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import { AuthContext } from '../context/AuthContext';
-import ProtectedNavigator from './ProtectedNavigator';
+import BottonNavigator from './BottonNavigator';
 import LoadingScreen from '../screens/LoadingScreen';
 
 const Stack = createStackNavigator();
@@ -15,7 +15,7 @@ const Navigator = () => {
     return <LoadingScreen />;
   }
   if (status === 'authenticated') {
-    return <ProtectedNavigator />;
+    return <BottonNavigator />;
   }
 
   return (

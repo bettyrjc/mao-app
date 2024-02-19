@@ -1,86 +1,50 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Platform,
-  Pressable,
-} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {HeaderButtons} from 'react-navigation-header-buttons';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, COLOR_OPACITY, GRAY_COLORS} from '../../constants';
-import {HeaderButton} from 'react-navigation-header-buttons';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+// import Icon from 'react-native-vector-icons/Ionicons';
+import { COLORS, COLOR_OPACITY, GRAY_COLORS } from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useSearchContext} from '../../context/SearchContext';
-import {useItemPressContext} from '../../context/ItemPressContext';
-import SearchBarComponent from '../inputs/SearchInput';
+import { useUserContext } from '../../context/UserContext';
 
 type NavbarPropTypes = {
   title: string;
 };
-const Navbar = ({title = 'nombre'}: NavbarPropTypes) => {
+const Navbar = ({ title = 'nombre' }: NavbarPropTypes) => {
   const navigation = useNavigation<any>();
-  const {handleSearch, isSearch} = useSearchContext();
-  const [user, setUser] = useState('');
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const userStorage: any = await AsyncStorage.getItem('user');
-        setUser(userStorage);
-      } catch (error) {
-        console.error('Error al obtener el usuario:', error);
-      }
-    };
-    getUser();
-  }, []);
-  const parsearUser = user && JSON.parse(user);
-  const name = parsearUser?.name?.charAt(0).toUpperCase();
-  const lastname = parsearUser?.last_name?.charAt(0).toUpperCase();
+  const { user } = useUserContext();
 
-  const {pressedItems} = useItemPressContext();
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const userStorage: any = await AsyncStorage.getItem('user');
+  //       setUser(userStorage);
+  //     } catch (error) {
+  //       console.error('Error al obtener el usuario:', error);
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
+  const name = user?.name?.charAt(0).toUpperCase();
+  const lastname = user?.last_name?.charAt(0).toUpperCase();
 
   return (
     <View style={styles.container}>
-      {!isSearch && (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <TouchableOpacity>
-            <Icon
-              name="menu"
-              color={COLORS.white}
-              size={30}
-              onPress={() => navigation.toggleDrawer()}
-            />
-          </TouchableOpacity>
-        </HeaderButtons>
-      )}
-      {!isSearch ? (
-        <>
-          <Text style={styles.title}>{title}</Text>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            {(pressedItems[0] === 'dashboard_1' ||
-              pressedItems[0] === 'deparments') && (
-              <Pressable onPress={handleSearch}>
-                <Icon name="search-outline" color={COLORS.white} size={20} />
-              </Pressable>
-            )}
-            <View style={styles.initialsContainer}>
-              <Text style={styles.initials}>{`${name}${lastname}`}</Text>
-            </View>
+      <>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <View style={styles.initialsContainer}>
+            <Text style={styles.initials}>{`${name}${lastname}`}</Text>
           </View>
-        </>
-      ) : (
-        <View style={styles.searchContainer}>
-          <SearchBarComponent />
+          <Text style={styles.title}>{`${user.name}${lastname}.`}</Text>
+
         </View>
-      )}
+      </>
     </View>
   );
 };
@@ -92,35 +56,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: Platform.OS === 'ios' ? 100 : 80,
     paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    backgroundColor: COLORS.primaryPurple,
-    paddingTop: Platform.OS === 'ios' ? 23 : 0,
-    borderBottomColor: COLORS.white,
+    borderBottomWidth: 2,
+    backgroundColor: COLORS.white,
+    paddingTop: Platform.OS === 'ios' ? 35 : 0,
+    borderBottomColor: GRAY_COLORS.gray200,
   },
-  searchContainer: {
-    position: 'absolute',
-    right: 20,
-    bottom: 5,
-    top: Platform.OS === 'ios' ? 45 : 20,
-    width: '100%',
-    zIndex: 400,
-  },
+
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: COLORS.white,
+    color: GRAY_COLORS.gray900,
   },
   initialsContainer: {
     width: 50,
     height: 50,
     borderRadius: 100,
-    backgroundColor: COLOR_OPACITY.green10,
+    backgroundColor: COLORS.secondaryDark,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 10,
+    marginRight: 10,
   },
   initials: {
-    color: COLORS.white,
+    color: COLORS.secondary,
     fontWeight: 'bold',
     fontSize: 20,
     textColor: GRAY_COLORS.gray800,
