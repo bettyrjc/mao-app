@@ -6,12 +6,9 @@ const Stack = createStackNavigator();
 const ProtectedNavigator = () => {
   return (
     <Stack.Navigator
-    // screenOptions={{
-    //   headerShown: true,
-    //   header(props) {
-    //     return <Navbar title={props?.route.name} />;
-    //   },
-    // }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
     </Stack.Navigator>

@@ -14,7 +14,7 @@ const BottonNavigator = () => {
       screenOptions={{
         headerShown: true,
         header(props) {
-          return <Navbar title={props?.route.name} />;
+          return <Navbar title={props?.route?.name} />;
         },
       }}
     >

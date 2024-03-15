@@ -4,6 +4,9 @@ import { useUserContext } from '../context/UserContext';
 import { AuthContext } from '../context/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants';
+import WalletsCard from '../utils/cards/WalletsCard';
+import ButtonResumen from '../utils/buttons/ButtonResumen';
+import BudgetCard from '../utils/cards/BudgetCard';
 
 const DashboardScreen = () => {
   // const { data } = useUser();
@@ -16,10 +19,13 @@ const DashboardScreen = () => {
   console.log('data fff', user);
   return (
     <SafeAreaView style={styles.box}>
-      <Text>
+      {/* <Text>
         {user?.name} {user?.last_name}
       </Text>
-      <Text>{user?.email}</Text>
+      <Text>{user?.email}</Text> */}
+      <WalletsCard />
+      <ButtonResumen />
+      <BudgetCard />
       <Pressable onPress={onSubmit}>
         <Text>Logout</Text>
       </Pressable>

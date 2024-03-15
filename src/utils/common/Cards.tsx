@@ -17,10 +17,17 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderColor: GRAY_COLORS.gray200,
     borderRadius: 10,
-    boxShadow: ' 0px 4px 4px rgba(0, 0, 0, 0.08)',
     padding: 8,
     marginBottom: Platform.OS === 'ios' ? 6 : 4,
     color: GRAY_COLORS.gray900,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
   },
 });
 

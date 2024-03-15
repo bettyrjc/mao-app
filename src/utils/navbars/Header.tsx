@@ -1,17 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 // import Icon from 'react-native-vector-icons/Ionicons';
-import { COLORS, COLOR_OPACITY, GRAY_COLORS } from '../../constants';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { COLORS, GRAY_COLORS } from '../../constants';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useUserContext } from '../../context/UserContext';
 
 type NavbarPropTypes = {
   title: string;
 };
 const Navbar = ({ title = 'nombre' }: NavbarPropTypes) => {
-  const navigation = useNavigation<any>();
+  // const navigation = useNavigation<any>();
   const { user } = useUserContext();
 
   // useEffect(() => {
@@ -41,8 +41,7 @@ const Navbar = ({ title = 'nombre' }: NavbarPropTypes) => {
           <View style={styles.initialsContainer}>
             <Text style={styles.initials}>{`${name}${lastname}`}</Text>
           </View>
-          <Text style={styles.title}>{`${user.name}${lastname}.`}</Text>
-
+          <Text style={styles.title}>{`${user?.name}${lastname}.`}</Text>
         </View>
       </>
     </View>
