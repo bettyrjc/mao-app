@@ -8,7 +8,12 @@ const wallets = [
   { name: 'Bank', amount: 5000.0 },
   { name: 'Bank', amount: 5000.0 },
 ];
-const WalletsCard = () => {
+
+type WalletsCardProps = {
+  handleOpenAddBank: () => void;
+};
+
+const WalletsCard = ({ handleOpenAddBank }: WalletsCardProps) => {
   return (
     <Cards>
       <View style={styles.titleBox}>
@@ -16,7 +21,7 @@ const WalletsCard = () => {
         <Text style={[styles.title, styles.totalMoney]}>Total: $7500</Text>
       </View>
       <View style={styles.box}>
-        <Pressable style={[styles.buttonContainer, styles.buttonAdd]}>
+        <Pressable style={[styles.buttonContainer, styles.buttonAdd]} onPress={handleOpenAddBank}>
           <Icon name="add-circle" size={45} color={COLORS.secondary} />
           <Text style={[styles.textAdd]}>Add</Text>
         </Pressable>

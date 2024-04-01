@@ -1,34 +1,33 @@
-import { Text, Pressable, StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
-import { useUserContext } from '../context/UserContext';
+import { StyleSheet } from 'react-native';
+import uuid from 'react-native-uuid';
+// import { useUserContext } from '../context/UserContext';
 import { AuthContext } from '../context/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { COLORS } from '../constants';
-import WalletsCard from '../utils/cards/WalletsCard';
-import ButtonResumen from '../utils/buttons/ButtonResumen';
-import BudgetCard from '../utils/cards/BudgetCard';
+import DashboardTemplate from '../templates/DashboardTemplate';
 
 const DashboardScreen = () => {
   // const { data } = useUser();
   const { logOut } = useContext(AuthContext);
+  // const { user } = useUserContext();
 
   const onSubmit = () => {
     logOut();
   };
-  const { user } = useUserContext();
-  console.log('data fff', user);
+
+  const onNewAccount = (data: any) => {
+    const object = {
+      id: uuid.v4(),
+      name: data.name,
+      balance: data.balance,
+      currency: data.currency,
+    };
+    console.log(object);
+  };
+
   return (
     <SafeAreaView style={styles.box}>
-      {/* <Text>
-        {user?.name} {user?.last_name}
-      </Text>
-      <Text>{user?.email}</Text> */}
-      <WalletsCard />
-      <ButtonResumen />
-      <BudgetCard />
-      <Pressable onPress={onSubmit}>
-        <Text>Logout</Text>
-      </Pressable>
+      <DashboardTemplate onLogout={onSubmit} onNewAccount={onNewAccount} />
     </SafeAreaView>
   );
 };

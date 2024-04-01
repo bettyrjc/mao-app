@@ -44,7 +44,7 @@ const UserScreen = () => {
         </View>
       </Cards>
 
-      <Cards>
+      {/* <Cards>
         <View
           style={{
             borderBottomWidth: 1,
@@ -68,7 +68,7 @@ const UserScreen = () => {
           <TextContent text={user?.last_name} name={'Apellido'} />
           <TextContent text={user?.email} name={'Email'} />
         </View>
-      </Cards>
+      </Cards> */}
 
       <Pressable style={styles.boxButton}>
         <Text style={styles.textButton}>Logout</Text>
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 20,
   },
   textButton: {
     color: COLORS.white,

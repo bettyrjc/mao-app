@@ -1,16 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  TouchableOpacityProps,
-  ActivityIndicator,
-  View,
-} from 'react-native';
-import {COLORS, GRAY_COLORS} from '../../constants';
-import {globalThemes} from '../../themes/GlobalThemes';
+import { TouchableOpacity, Text, TouchableOpacityProps, ActivityIndicator, View } from 'react-native';
+import { COLORS, GRAY_COLORS } from '../../constants';
+import { globalThemes } from '../../themes/GlobalThemes';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {buttonStyles} from '../../themes/ButtonsThemes';
+import { buttonStyles } from '../../themes/ButtonsThemes';
 
 interface ContainedButtonProps extends TouchableOpacityProps {
   title: string;
@@ -23,25 +17,13 @@ interface ContainedButtonProps extends TouchableOpacityProps {
   iconName?: string;
   width?: number | string;
   fontSize?: number;
-  weight?:
-    | '700'
-    | 'normal'
-    | 'bold'
-    | '100'
-    | '200'
-    | '300'
-    | '400'
-    | '500'
-    | '600'
-    | '800'
-    | '900'
-    | undefined;
+  weight?: '700' | 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '800' | '900' | undefined;
 }
 
 const ContainedButton: React.FC<ContainedButtonProps> = ({
   title,
   onPress,
-  backgroundColor = COLORS.primaryGreen,
+  backgroundColor = COLORS.primary,
   textColor = COLORS.white,
   isLoading = false,
   isDisabled = false,
@@ -52,8 +34,7 @@ const ContainedButton: React.FC<ContainedButtonProps> = ({
   weight = '700',
   ...rest
 }) => {
-  const bgColor =
-    isLoading || isDisabled ? GRAY_COLORS.gray300 : backgroundColor;
+  const bgColor = isLoading || isDisabled ? GRAY_COLORS.gray300 : backgroundColor;
 
   return (
     <TouchableOpacity
@@ -64,7 +45,8 @@ const ContainedButton: React.FC<ContainedButtonProps> = ({
       }}
       onPress={onPress}
       {...rest}
-      disabled={isLoading || isDisabled}>
+      disabled={isLoading || isDisabled}
+    >
       {isLoading ? (
         <ActivityIndicator size="small" color={textColor} />
       ) : (
@@ -76,7 +58,8 @@ const ContainedButton: React.FC<ContainedButtonProps> = ({
               color: textColor,
               fontWeight: weight,
               fontSize: fontSize || 16,
-            }}>
+            }}
+          >
             {title}
           </Text>
         </View>

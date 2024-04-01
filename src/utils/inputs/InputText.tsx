@@ -1,14 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import {COLORS, GRAY_COLORS} from '../../constants';
+import { Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { COLORS, GRAY_COLORS } from '../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Tooltips from '../common/Tooltips';
 // import Tooltips from '../utils/common/Tooltips';
@@ -103,11 +96,7 @@ const InputText = ({
       paddingLeft: nameIcon ? 4 : 10,
       paddingTop: Platform.OS === 'ios' ? 14 : 0,
       paddingBottom: Platform.OS === 'ios' ? 14 : 2,
-      backgroundColor: backgroundColor
-        ? backgroundColor
-        : changeColor
-        ? GRAY_COLORS.gray100
-        : 'transparent',
+      backgroundColor: backgroundColor ? backgroundColor : changeColor ? GRAY_COLORS.gray100 : 'transparent',
       marginBottom: 6,
       display: 'flex',
       flexDirection: 'row',
@@ -116,7 +105,7 @@ const InputText = ({
     },
     label: {
       color: textColor,
-      fontSize: 14,
+      fontSize: 18,
       paddingLeft: 4,
       marginBottom: 2,
     },
@@ -136,14 +125,9 @@ const InputText = ({
   return (
     <>
       {label && <Text style={styles.label}>{label}</Text>}
-      <View
-        style={[
-          stylesInput,
-          styles.inputBase,
-          isBorderFull ? styles.borderFull : styles.borderBottom,
-        ]}>
+      <View style={[stylesInput, styles.inputBase, isBorderFull ? styles.borderFull : styles.borderBottom]}>
         {nameIcon && (
-          <View style={{paddingLeft: 4}}>
+          <View style={{ paddingLeft: 4 }}>
             <Icon name={nameIcon} size={sizeIcon} color={GRAY_COLORS.gray500} />
           </View>
         )}
@@ -170,11 +154,7 @@ const InputText = ({
 
         {endIconName && (
           <Pressable onPress={endIconPress}>
-            <Icon
-              name={endIconName}
-              size={sizeEndIcon}
-              color={GRAY_COLORS.gray500}
-            />
+            <Icon name={endIconName} size={sizeEndIcon} color={GRAY_COLORS.gray500} />
           </Pressable>
         )}
         {isTooltip && <Tooltips placement="bottom" label={tooltipText} />}
