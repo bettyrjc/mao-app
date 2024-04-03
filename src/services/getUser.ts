@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import financeApi from '../api/financeApi';
-import { useUserContext } from './UserContext';
+// import { useUserContext } from '../context/UserContext';
 
 export const getUser = async () => {
-  const { setUser } = useUserContext();
+  // const { setUser } = useUserContext();
+  //todo: checked it
 
   const userId: any = await AsyncStorage.getItem('user_id');
   const id = JSON.parse(userId);
@@ -11,7 +12,7 @@ export const getUser = async () => {
   console.log('userId', id);
   try {
     const data = await financeApi.get(`/api/v1/users/${id}`);
-    setUser(data);
+    // setUser(data);
     return data.data;
   } catch (e: any) {
     console.log('error getUser', e.response);

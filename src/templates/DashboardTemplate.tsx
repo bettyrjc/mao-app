@@ -8,9 +8,10 @@ import AddAccountModal from '../utils/modals/AddAccountModal';
 type DashboardTemplateProps = {
   onLogout: () => void;
   onNewAccount: (data: any) => void;
+  isLoadingAddAccount: boolean;
 };
 
-const DashboardTemplate = ({ onLogout, onNewAccount }: DashboardTemplateProps) => {
+const DashboardTemplate = ({ onLogout, onNewAccount, isLoadingAddAccount }: DashboardTemplateProps) => {
   const [openAddBank, setOpenAddBank] = React.useState(false);
   const handleOpenAddBank = () => {
     setOpenAddBank(!openAddBank);
@@ -30,7 +31,7 @@ const DashboardTemplate = ({ onLogout, onNewAccount }: DashboardTemplateProps) =
         handleModalOpenAddBank={handleOpenAddBank}
         onSubmitData={onNewAccount}
         names={'names'}
-        isLoading={false}
+        isLoading={isLoadingAddAccount}
         defaultValues={{}}
       />
     </View>

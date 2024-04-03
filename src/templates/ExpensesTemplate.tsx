@@ -2,14 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AddExpensesForm from '../utils/forms/AddExpensesForm';
 
-const ExpensesTemplate = ({ selectedDate, setSelectedDate }: any) => {
+const ExpensesTemplate = ({ selectedDate, setSelectedDate, onNewExpenses, isLoadingAddExpeses }: any) => {
   return (
     <View>
       <Text style={styles.title}>ExpensesTemplate</Text>
 
       <AddExpensesForm
-        onSubmit={(data) => console.log('submit', data, selectedDate)}
-        isLoading={false}
+        onSubmit={onNewExpenses}
+        isLoading={isLoadingAddExpeses}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />

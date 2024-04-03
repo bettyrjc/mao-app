@@ -1,29 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
-import {validator} from './validator';
+import { validator } from './validator';
 import InputText from '../inputs/InputText';
 import ContainedButton from '../buttons/ContainedButton';
-import {COLORS, GRAY_COLORS} from '../../constants';
+import { COLORS, GRAY_COLORS } from '../../constants';
 import PasswordInput from '../inputs/PasswordInput';
-import {useErrorsContext} from '../../context/ErrorsContext';
+import { useErrorsContext } from '../../context/ErrorsContext';
 
 const schema = Yup.object().shape({
-  username: Yup.string()
-    .email('Ingresa un email válido')
-    .required('El email es requerido')
-    .trim(),
-  password: Yup.string()
-    .required('La contraseña es requerida')
-    .trim('La contraseña es incorrecta'),
+  username: Yup.string().email('Ingresa un email válido').required('El email es requerido').trim(),
+  password: Yup.string().required('La contraseña es requerida').trim('La contraseña es incorrecta'),
 });
 type FormData = {
   onSubmit: (data: any) => void;
@@ -31,31 +20,26 @@ type FormData = {
   handleOpenModal: () => void;
   isLoading: boolean;
 };
-const LoginForm = ({
-  onSubmit,
-  navigation,
-  handleOpenModal,
-  isLoading,
-}: FormData) => {
+const LoginForm = ({ onSubmit, navigation, handleOpenModal, isLoading }: FormData) => {
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
-    resolver: data => validator(data, schema),
+    resolver: (data) => validator(data, schema),
   });
-  const {error, setErrors} = useErrorsContext();
+  const { error, setErrors } = useErrorsContext();
 
   return (
     <View>
       <Controller
         control={control}
         name="username"
-        render={({field: {onChange, value}}) => (
+        render={({ field: { onChange, value } }) => (
           <InputText
             value={value}
-            onChangeText={text => onChange(text)}
-            error={errors.username?.message || error.username}
+            onChangeText={(text) => onChange(text)}
+            error={errors.username?.message || error?.username}
             placeholder="maria@gmail.com"
             nameIcon="mail-outline"
             label="Correo electrónico"
@@ -65,15 +49,15 @@ const LoginForm = ({
           />
         )}
       />
-      <View style={{marginBottom: 20}} />
+      <View style={{ marginBottom: 20 }} />
       <Controller
         control={control}
         name="password"
-        render={({field: {onChange, value}}) => (
+        render={({ field: { onChange, value } }) => (
           <PasswordInput
             value={value}
-            onChangeText={text => onChange(text)}
-            error={errors.password?.message || error.password}
+            onChangeText={(text) => onChange(text)}
+            error={errors?.password?.message || error?.password}
           />
         )}
       />
@@ -82,7 +66,8 @@ const LoginForm = ({
         onPress={() => {
           setErrors([]);
           navigation.replace('RegisterScreen');
-        }}>
+        }}
+      >
         <Text style={styles.buttonRegisterContained}>
           ¿No tienes cuenta?
           <Text style={styles.buttonRegisters}> Regístrate</Text>

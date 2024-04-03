@@ -1,9 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import Cards from '../utils/common/Cards';
 import { useUserContext } from '../context/UserContext';
 import { COLORS, GRAY_COLORS } from '../constants';
+import { AuthContext } from '../context/AuthContext';
 
 const TextContent = ({ name, text }: any) => {
   return (
@@ -15,7 +16,7 @@ const TextContent = ({ name, text }: any) => {
 };
 const UserScreen = () => {
   const { user } = useUserContext();
-
+  const { logOut } = useContext(AuthContext);
   return (
     <SafeAreaView style={styles.box}>
       <Cards>
@@ -70,7 +71,7 @@ const UserScreen = () => {
         </View>
       </Cards> */}
 
-      <Pressable style={styles.boxButton}>
+      <Pressable style={styles.boxButton} onPress={logOut}>
         <Text style={styles.textButton}>Logout</Text>
       </Pressable>
     </SafeAreaView>

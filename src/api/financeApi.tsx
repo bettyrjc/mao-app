@@ -20,17 +20,7 @@ financeApi.interceptors.request.use(async (config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`; // Agrega el token a la cabecera de la solicitud
   }
-
-  return config;
-});
-
-financeApi.interceptors.request.use(async (config) => {
-  const token = await AsyncStorage.getItem('token'); // Obtén el token almacenado
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`; // Agrega el token a la cabecera de la solicitud
-  }
-
+  console.log('token in api', config);
   return config;
 });
 

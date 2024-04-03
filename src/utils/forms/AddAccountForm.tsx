@@ -67,9 +67,8 @@ const AddAccountForm = ({ onSubmit, isLoading }: FormData) => {
           <SelectInput
             label="Currency"
             options={[
-              { label: 'Bolivares', value: 'bolivares' },
-              { label: 'Dolares', value: 'dolares' },
-              { label: 'Pesos', value: 'pesos' },
+              { label: 'Bolivares', value: 'bs' },
+              { label: 'Dolares', value: 'USD' },
             ]}
             selectedValue={value}
             onValueChange={(selectedValue) => onChange(selectedValue)}

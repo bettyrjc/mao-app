@@ -13,6 +13,8 @@ type NavbarPropTypes = {
 const Navbar = ({ title = 'nombre' }: NavbarPropTypes) => {
   // const navigation = useNavigation<any>();
   const { user } = useUserContext();
+  console.log(title);
+  //todo this is losing when i recharge
 
   // useEffect(() => {
   //   const getUser = async () => {
