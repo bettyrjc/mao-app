@@ -21,7 +21,7 @@ type AuthContextProps = {
 };
 
 export const authInicialState: AuthState = {
-  status: 'not-authenticated',
+  status: 'checking',
   token: null,
   user_id: null,
   errorMessage: '',
@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(authReducer, authInicialState);
   const [isLoading, setIsLoading] = useState(false);
   const { setErrors } = useErrorsContext();
-  console.error('state.status', state.status);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -94,7 +93,6 @@ export const AuthProvider = ({ children }: any) => {
       const data = await financeApi.get(`/api/v1/users/${id}`);
       setUser(data);
       await AsyncStorage.setItem('data', JSON.stringify(data));
-      console.log('data get user', data);
       return data;
     } catch (e: any) {
       console.log('error getUser', e.response);
@@ -124,7 +122,6 @@ export const AuthProvider = ({ children }: any) => {
       setIsLoading(false);
     } catch (error: any) {
       console.log('_______error sign in_______', error?.response.data.errors);
-
       setIsLoading(false);
       console.log(error?.response.data.errors);
       setErrors(error.response.data.errors);

@@ -7,7 +7,7 @@ export function useCreateExpense() {
 
   return useMutation(
     ({ expenses_id, ...data }: any) => {
-      return financeApi.post(`/api/v1/expenses/${expenses_id}`, {
+      return financeApi.post(`/api/v1/movements/expenses/${expenses_id}`, {
         ...data.params,
       });
     },

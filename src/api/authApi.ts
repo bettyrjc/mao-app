@@ -15,7 +15,6 @@ authApi.interceptors.request.use(async (config) => {
     const token = await AsyncStorage.getItem('token');
     if (token) {
       config.headers['x-token'] = token;
-      config.headers['Mica-Source'] = 'brokerus';
     }
   } catch (error) {
     console.error('error_parent', error);
