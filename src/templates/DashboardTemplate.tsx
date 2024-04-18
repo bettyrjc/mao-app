@@ -9,9 +9,10 @@ type DashboardTemplateProps = {
   onLogout: () => void;
   onNewAccount: (data: any) => void;
   isLoadingAddAccount: boolean;
+  dataAccount: any;
 };
 
-const DashboardTemplate = ({ onLogout, onNewAccount, isLoadingAddAccount }: DashboardTemplateProps) => {
+const DashboardTemplate = ({ onLogout, onNewAccount, isLoadingAddAccount, dataAccount }: DashboardTemplateProps) => {
   const [openAddBank, setOpenAddBank] = React.useState(false);
   const handleOpenAddBank = () => {
     setOpenAddBank(!openAddBank);
@@ -19,7 +20,7 @@ const DashboardTemplate = ({ onLogout, onNewAccount, isLoadingAddAccount }: Dash
 
   return (
     <View>
-      <WalletsCard handleOpenAddBank={handleOpenAddBank} />
+      <WalletsCard handleOpenAddBank={handleOpenAddBank} dataAccount={dataAccount} />
       <ButtonResumen />
       <BudgetCard />
       <Pressable onPress={onLogout}>

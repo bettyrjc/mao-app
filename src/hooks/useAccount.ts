@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deserializer } from '../utils/deserializer';
 import financeApi from '../api/financeApi';
 
@@ -13,44 +13,26 @@ export function useCreateAccount() {
     },
     {
       onSettled: () => {
-        queryClient.invalidateQueries('account');
+        queryClient.invalidateQueries('accounts');
       },
     }
   );
 }
-
-export const useAccounts = (accountId?: string, term?: string) => {
-  const fetchServices = async (pageParam: number) => {
-    return financeApi
-      .get(
-        `/api/v1/accounts/&page[number]=${pageParam}&page[size]=15
-        ${term ? `&filter[term]=${term}` : ''}`
-      )
-      .then((res) => deserializer(res))
-      .catch((err) => console.log(err));
-  };
-
-  const query = useInfiniteQuery(
-    ['accounts', accountId, term],
-    ({ pageParam = 1 }) => {
-      return fetchServices(pageParam);
-    },
-    {
-      getNextPageParam: (lastPage: any, allPages: any) => {
-        const maxPages = lastPage?.meta?.page?.total;
-        const nextPage = allPages?.length + 1;
-
-        return nextPage <= maxPages ? nextPage : undefined;
-      },
+export const useAccounts = () => {
+  return useQuery('accounts', async () => {
+    try {
+      const res = await financeApi.get('/api/v1/accounts');
+      return res;
+    } catch (error) {
+      console.error('error in account', error);
+      throw error; // Lanza el error para que React Query lo maneje
     }
-  );
-
-  return query;
+  });
 };
 export const useAccount = (accountId: string) => {
   return useQuery('accounts', async () => {
     return financeApi
-      .get(`api/v1/accounts/${accountId}`)
+      .get(`/api/v1/accounts/${accountId}`)
       .then((res) => {
         return deserializer(res);
       })

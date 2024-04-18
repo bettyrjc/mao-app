@@ -1,5 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react';
+import React, { createContext, FC, ReactNode, useContext, useState } from 'react';
 
 const UserContext = createContext<any>(undefined);
 

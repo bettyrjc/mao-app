@@ -9,12 +9,11 @@ import LoadingScreen from '../screens/LoadingScreen';
 const Stack = createStackNavigator();
 
 const Navigator = () => {
-  const { status } = useContext(AuthContext);
-  console.log('status', status);
+  const { status, isLoadingUser } = useContext(AuthContext);
   if (status === 'checking') {
     return <LoadingScreen />;
   }
-  if (status === 'authenticated') {
+  if (status === 'authenticated' && !isLoadingUser) {
     return <BottonNavigator />;
   }
 

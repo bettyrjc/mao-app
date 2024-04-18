@@ -1,17 +1,16 @@
 import React, { useContext } from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import uuid from 'react-native-uuid';
-// import { useUserContext } from '../context/UserContext';
 import { AuthContext } from '../context/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DashboardTemplate from '../templates/DashboardTemplate';
-import { useCreateAccount } from '../hooks/useAccount';
+import { useAccounts, useCreateAccount } from '../hooks/useAccount';
 
 const DashboardScreen = () => {
-  // const { data } = useUser();
   const { logOut } = useContext(AuthContext);
-  // const { user } = useUserContext();
   const { mutate: saveAccount, isLoading: isLoadingAddAccount } = useCreateAccount();
+  const { data: dataAccount } = useAccounts();
+
   const onSubmit = () => {
     logOut();
   };
@@ -38,10 +37,14 @@ const DashboardScreen = () => {
       }
     );
   };
-
   return (
     <SafeAreaView style={styles.box}>
-      <DashboardTemplate onLogout={onSubmit} onNewAccount={onNewAccount} isLoadingAddAccount={isLoadingAddAccount} />
+      <DashboardTemplate
+        onLogout={onSubmit}
+        onNewAccount={onNewAccount}
+        isLoadingAddAccount={isLoadingAddAccount}
+        dataAccount={dataAccount}
+      />
     </SafeAreaView>
   );
 };

@@ -13,16 +13,17 @@ import Cards from '../common/Cards';
 
 const schema = Yup.object().shape({
   // currency: Yup.string().trim('Ingresa una moneda válida').required('La moneda es requerida'),
-  amount: Yup.string().required('El nombre es requerido').trim('El nombre es requerido'),
-  account_id: Yup.string().required('El balance es requerido'),
+  amount: Yup.string().required('El monto es requerido').trim('El monto es requerido'),
+  account_id: Yup.string().required('El banco es requerido'),
 });
 type FormData = {
   onSubmit: (data: any) => void;
   isLoading: boolean;
   selectedDate: string;
   setSelectedDate: () => void;
+  dataAccount: any;
 };
-const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate }: FormData) => {
+const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate, dataAccount }: FormData) => {
   const { error } = useErrorsContext();
   const {
     control,
@@ -31,6 +32,11 @@ const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate }:
   } = useForm({
     resolver: (data) => validator(data, schema),
   });
+
+  const options = dataAccount?.data?.map((item: any) => ({
+    label: item.name,
+    value: item.id,
+  }));
 
   return (
     <View style={styles.container}>
@@ -60,7 +66,7 @@ const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate }:
               onChangeText={(text: any) => onChange(text)}
               error={errors.name?.message || error.name}
               placeholder="Mercantil banco"
-              label="Account name"
+              label="Date"
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
             />
@@ -74,11 +80,7 @@ const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate }:
           render={({ field: { onChange, value } }) => (
             <SelectInput
               label="Account"
-              options={[
-                { label: 'Mercantil', value: '1' },
-                { label: 'Binance', value: '2' },
-                { label: 'Bancaribe', value: '3' },
-              ]}
+              options={options}
               selectedValue={value}
               onValueChange={(selectedValue) => onChange(selectedValue)}
               placeholder="Seleciona"

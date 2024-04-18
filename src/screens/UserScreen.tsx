@@ -16,6 +16,7 @@ const TextContent = ({ name, text }: any) => {
 };
 const UserScreen = () => {
   const { user } = useUserContext();
+  console.log(user)
   const { logOut } = useContext(AuthContext);
   return (
     <SafeAreaView style={styles.box}>

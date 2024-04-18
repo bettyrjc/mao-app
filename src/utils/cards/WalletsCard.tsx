@@ -3,17 +3,14 @@ import React from 'react';
 import Cards from '../common/Cards';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS, COLOR_OPACITY, GRAY_COLORS } from '../../constants';
-const wallets = [
-  { name: 'Cash', amount: 3000.5 },
-  { name: 'Bank', amount: 5000.0 },
-  { name: 'Bank', amount: 5000.0 },
-];
 
 type WalletsCardProps = {
   handleOpenAddBank: () => void;
+  dataAccount: any;
 };
 
-const WalletsCard = ({ handleOpenAddBank }: WalletsCardProps) => {
+const WalletsCard = ({ handleOpenAddBank, dataAccount }: WalletsCardProps) => {
+  console.log(dataAccount);
   return (
     <Cards>
       <View style={styles.titleBox}>
@@ -26,13 +23,15 @@ const WalletsCard = ({ handleOpenAddBank }: WalletsCardProps) => {
           <Text style={[styles.textAdd]}>Add</Text>
         </Pressable>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {wallets.map((wallet, index) => (
+          {dataAccount?.data?.map((wallet: any, index: string) => (
             <Pressable key={index} style={[styles.buttonContainer, styles.buttonWallet]}>
               <View style={styles.iconButtonWallet}>
                 <Icon name="wallet-outline" size={25} color={COLORS.white} />
               </View>
               <Text style={[styles.textWallet]}>{wallet.name}</Text>
-              <Text style={[styles.textWallet, styles.textMoney]}>{wallet.amount}</Text>
+              <Text style={[styles.textWallet, styles.textMoney]}>
+                {wallet.balance} {wallet.currency}
+              </Text>
             </Pressable>
           ))}
         </ScrollView>

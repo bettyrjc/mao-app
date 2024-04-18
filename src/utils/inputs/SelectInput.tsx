@@ -54,7 +54,7 @@ const SelectInput = ({
     },
     label: {
       color: textColor,
-      fontSize: 14,
+      fontSize: 16,
       paddingLeft: 4,
       marginBottom: 2,
     },

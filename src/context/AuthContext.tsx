@@ -18,6 +18,7 @@ type AuthContextProps = {
   logOut: () => void;
   removeError: () => void;
   isLoading: boolean;
+  isLoadingUser: boolean;
 };
 
 export const authInicialState: AuthState = {
@@ -33,8 +34,8 @@ export const AuthProvider = ({ children }: any) => {
   const { setUser } = useUserContext();
   const [state, dispatch] = useReducer(authReducer, authInicialState);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
   const { setErrors } = useErrorsContext();
-  console.error('state.status', state.status);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -42,6 +43,7 @@ export const AuthProvider = ({ children }: any) => {
         const token = await AsyncStorage.getItem('token');
         const user_id = await AsyncStorage.getItem('user_id');
         if (token && user_id) {
+          console.log('entroo');
           dispatch({
             type: 'signIn',
             payload: {
@@ -90,13 +92,15 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   const getUser = async (id: string) => {
+    setIsLoadingUser(true);
     try {
       const data = await financeApi.get(`/api/v1/users/${id}`);
       setUser(data);
       await AsyncStorage.setItem('data', JSON.stringify(data));
-      console.log('data get user', data);
+      setIsLoadingUser(false);
       return data;
     } catch (e: any) {
+      setIsLoadingUser(false);
       console.log('error getUser', e.response);
     }
   };
@@ -153,6 +157,7 @@ export const AuthProvider = ({ children }: any) => {
         logOut,
         removeError,
         isLoading,
+        isLoadingUser,
       }}
     >
       {children}

@@ -16,16 +16,15 @@ const financeApi = axios.create({
 
 financeApi.interceptors.request.use(async (config) => {
   const token = await AsyncStorage.getItem('token'); // Obtén el token almacenado
-  console.log('token in api', token);
+  console.log('token interceptors', token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`; // Agrega el token a la cabecera de la solicitud
   }
-  console.log('token in api', config);
   return config;
 });
 
 financeApi.interceptors.response.use(
-  (response) => {
+  async (response) => {
     return response.data;
   },
   async (error) => {
@@ -53,7 +52,7 @@ financeApi.interceptors.response.use(
     //   //   }
     //   // }
     // }
-    console.error('error', error);
+    console.error('error in token', error);
     return Promise.reject(error);
   }
 );
