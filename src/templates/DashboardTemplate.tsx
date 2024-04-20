@@ -20,7 +20,7 @@ const DashboardTemplate = ({
   dataMovements,
 }: DashboardTemplateProps) => {
   const tableHead = ['Fecha', 'Monto', 'Tipo'];
-  const tableData = dataMovements.map((item) => [item.date, item.amount.toString(), item.type]);
+  const tableData = dataMovements?.map((item) => [item.date, item.amount.toString(), item.type]) || [];
 
   const [openAddBank, setOpenAddBank] = React.useState(false);
   const handleOpenAddBank = () => {
@@ -36,7 +36,7 @@ const DashboardTemplate = ({
         <ScrollView>
           <Table>
             <Row data={tableHead} style={styles.head} textStyle={styles.text} />
-            {tableData.map((rowData, index) => (
+            {tableData?.map((rowData, index) => (
               <Row key={index} data={rowData} style={styles.row} textStyle={styles.text} />
             ))}
           </Table>
