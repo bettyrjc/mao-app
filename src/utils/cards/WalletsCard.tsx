@@ -8,14 +8,27 @@ type WalletsCardProps = {
   handleOpenAddBank: () => void;
   dataAccount: any;
 };
+type AccumulatorType = { currency: string; total: number }[];
 
+type CurrencyTotal = { currency: string; total: number };
 const WalletsCard = ({ handleOpenAddBank, dataAccount }: WalletsCardProps) => {
-  console.log(dataAccount);
+  const result = dataAccount?.data?.reduce((acc: AccumulatorType, item: any) => {
+    const existingCurrency = acc.find((a: CurrencyTotal) => a.currency === item.currency);
+    if (existingCurrency) {
+      existingCurrency.total += item.balance;
+    } else {
+      acc.push({ currency: item.currency, total: item.balance });
+    }
+    return acc;
+  }, []);
+
   return (
     <Cards>
       <View style={styles.titleBox}>
         <Text style={styles.title}>Wallets</Text>
-        <Text style={[styles.title, styles.totalMoney]}>Total: $7500</Text>
+        <Text style={[styles.title, styles.totalMoney]}>
+          Total: {result?.[0].total} {result?.[0].currency}
+        </Text>
       </View>
       <View style={styles.box}>
         <Pressable style={[styles.buttonContainer, styles.buttonAdd]} onPress={handleOpenAddBank}>

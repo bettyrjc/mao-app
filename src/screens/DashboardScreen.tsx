@@ -1,20 +1,16 @@
-import React, { useContext } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import uuid from 'react-native-uuid';
-import { AuthContext } from '../context/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DashboardTemplate from '../templates/DashboardTemplate';
 import { useAccounts, useCreateAccount } from '../hooks/useAccount';
+import { useMovements } from '../hooks/useMovements';
 
 const DashboardScreen = () => {
-  const { logOut } = useContext(AuthContext);
   const { mutate: saveAccount, isLoading: isLoadingAddAccount } = useCreateAccount();
   const { data: dataAccount } = useAccounts();
-
-  const onSubmit = () => {
-    logOut();
-  };
-
+  const { data: movements, isLoading: isLoadingGetProfits } = useMovements();
   const onNewAccount = (data: any) => {
     const id = uuid.v4();
     const params = {
@@ -40,10 +36,10 @@ const DashboardScreen = () => {
   return (
     <SafeAreaView style={styles.box}>
       <DashboardTemplate
-        onLogout={onSubmit}
         onNewAccount={onNewAccount}
         isLoadingAddAccount={isLoadingAddAccount}
         dataAccount={dataAccount}
+        dataMovements={movements?.data}
       />
     </SafeAreaView>
   );

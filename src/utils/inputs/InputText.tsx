@@ -105,7 +105,7 @@ const InputText = ({
     },
     label: {
       color: textColor,
-      fontSize: 18,
+      fontSize: 16,
       paddingLeft: 4,
       marginBottom: 2,
     },

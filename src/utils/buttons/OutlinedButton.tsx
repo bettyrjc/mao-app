@@ -1,16 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  TouchableOpacityProps,
-  ActivityIndicator,
-  View,
-} from 'react-native';
-import {COLORS, COLOR_OPACITY, GRAY_COLORS} from '../../constants';
+import { TouchableOpacity, Text, TouchableOpacityProps, ActivityIndicator, View } from 'react-native';
+import { COLORS, COLOR_OPACITY, GRAY_COLORS } from '../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {globalThemes} from '../../themes/GlobalThemes';
-import {buttonStyles} from '../../themes/ButtonsThemes';
+import { globalThemes } from '../../themes/GlobalThemes';
+import { buttonStyles } from '../../themes/ButtonsThemes';
 
 interface OutlinedButtonProps extends TouchableOpacityProps {
   title: string;
@@ -23,25 +17,13 @@ interface OutlinedButtonProps extends TouchableOpacityProps {
   isFullRounded?: boolean;
   color?: string;
   width?: number;
-  weight?:
-    | '700'
-    | 'normal'
-    | 'bold'
-    | '100'
-    | '200'
-    | '300'
-    | '400'
-    | '500'
-    | '600'
-    | '800'
-    | '900'
-    | undefined;
+  weight?: '700' | 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '800' | '900' | undefined;
 }
 
 const OutlinedButton: React.FC<OutlinedButtonProps> = ({
   title,
   onPress,
-  backgroundColor = COLORS.primaryGreen,
+  backgroundColor = COLORS.primary,
   color = COLOR_OPACITY.green10,
   isLoading = false,
   isDisabled = false,
@@ -52,8 +34,7 @@ const OutlinedButton: React.FC<OutlinedButtonProps> = ({
   weight,
   ...rest
 }) => {
-  const textColor =
-    isLoading || isDisabled ? GRAY_COLORS.gray300 : backgroundColor;
+  const textColor = isLoading || isDisabled ? GRAY_COLORS.gray300 : backgroundColor;
   const bgColor = color;
 
   return (
@@ -69,7 +50,8 @@ const OutlinedButton: React.FC<OutlinedButtonProps> = ({
       onPress={onPress}
       {...rest}
       activeOpacity={0.8}
-      disabled={isLoading || isDisabled}>
+      disabled={isLoading || isDisabled}
+    >
       {isLoading ? (
         <ActivityIndicator size="small" color={textColor} />
       ) : (
@@ -81,7 +63,8 @@ const OutlinedButton: React.FC<OutlinedButtonProps> = ({
               color: textColor,
               fontWeight: weight || '700',
               marginLeft: iconName ? 10 : '',
-            }}>
+            }}
+          >
             {title}
           </Text>
         </View>

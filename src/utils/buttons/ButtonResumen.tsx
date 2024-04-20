@@ -1,14 +1,12 @@
 import { Text, Pressable, StyleSheet } from 'react-native';
 import React from 'react';
-import Cards from '../common/Cards';
+// import Cards from '../common/Cards';
 
 const ButtonResumen = () => {
   return (
-    <Cards>
-      <Pressable style={styles.box}>
-        <Text style={styles.title}>📝 Ver Resumen</Text>
-      </Pressable>
-    </Cards>
+    <Pressable style={styles.box}>
+      <Text style={styles.title}>📝 Ver Resumen</Text>
+    </Pressable>
   );
 };
 const styles = StyleSheet.create({

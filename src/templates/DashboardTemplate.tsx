@@ -1,18 +1,27 @@
-import { View, Text, Pressable } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import WalletsCard from '../utils/cards/WalletsCard';
 import ButtonResumen from '../utils/buttons/ButtonResumen';
-import BudgetCard from '../utils/cards/BudgetCard';
 import AddAccountModal from '../utils/modals/AddAccountModal';
-
+import Cards from '../utils/common/Cards';
+import { Table, Row } from 'react-native-table-component';
+import { COLOR_OPACITY, GRAY_COLORS } from '../constants';
 type DashboardTemplateProps = {
-  onLogout: () => void;
   onNewAccount: (data: any) => void;
   isLoadingAddAccount: boolean;
   dataAccount: any;
+  dataMovements: any[];
 };
 
-const DashboardTemplate = ({ onLogout, onNewAccount, isLoadingAddAccount, dataAccount }: DashboardTemplateProps) => {
+const DashboardTemplate = ({
+  onNewAccount,
+  isLoadingAddAccount,
+  dataAccount,
+  dataMovements,
+}: DashboardTemplateProps) => {
+  const tableHead = ['Fecha', 'Monto', 'Tipo'];
+  const tableData = dataMovements.map((item) => [item.date, item.amount.toString(), item.type]);
+
   const [openAddBank, setOpenAddBank] = React.useState(false);
   const handleOpenAddBank = () => {
     setOpenAddBank(!openAddBank);
@@ -21,11 +30,18 @@ const DashboardTemplate = ({ onLogout, onNewAccount, isLoadingAddAccount, dataAc
   return (
     <View>
       <WalletsCard handleOpenAddBank={handleOpenAddBank} dataAccount={dataAccount} />
-      <ButtonResumen />
-      <BudgetCard />
-      <Pressable onPress={onLogout}>
-        <Text>Logout</Text>
-      </Pressable>
+      <Cards>
+        <Text style={styles.title}>📝 Ver Resumen</Text>
+        <ButtonResumen />
+        <ScrollView>
+          <Table>
+            <Row data={tableHead} style={styles.head} textStyle={styles.text} />
+            {tableData.map((rowData, index) => (
+              <Row key={index} data={rowData} style={styles.row} textStyle={styles.text} />
+            ))}
+          </Table>
+        </ScrollView>
+      </Cards>
 
       <AddAccountModal
         openAddBank={openAddBank}
@@ -40,3 +56,15 @@ const DashboardTemplate = ({ onLogout, onNewAccount, isLoadingAddAccount, dataAc
 };
 
 export default DashboardTemplate;
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    paddingLeft: 10,
+  },
+  head: { height: 40 },
+  border: { borderColor: GRAY_COLORS.gray500, borderWidth: 1 },
+  text: { textAlign: 'center' },
+  row: { height: 30 },
+});

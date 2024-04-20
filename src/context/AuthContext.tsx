@@ -64,7 +64,9 @@ export const AuthProvider = ({ children }: any) => {
   }, []);
 
   const signUp = async (info: any) => {
-    const { name, last_name, email, pronounm, password, id } = info;
+    const { name, last_name, email, pronoun, password, id } = info;
+    console.log('info', info);
+
     setIsLoading(true);
     try {
       await authApi.post<any>('/api/v1/sign-up', {
@@ -73,21 +75,20 @@ export const AuthProvider = ({ children }: any) => {
         last_name,
         email,
         password,
-        pronounm,
+        pronoun,
       });
       dispatch({
         type: 'signUp',
         payload: 'Registro exitoso',
       });
-      // await signIn({
-      //   username: email,
-      //   password,
-      // });
+      await signIn({
+        username: email,
+        password,
+      });
     } catch (error: any) {
-      console.log('error?.response.data.errors', error);
+      console.log('error?.response.data.errors', error?.response);
       // Alert.alert('Error😔', error);
       setIsLoading(false);
-      // setErrors(error);
     }
   };
 

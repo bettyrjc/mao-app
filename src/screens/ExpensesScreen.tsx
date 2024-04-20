@@ -2,25 +2,42 @@ import React, { useState } from 'react';
 import uuid from 'react-native-uuid';
 import { Alert, SafeAreaView } from 'react-native';
 import ExpensesTemplate from '../templates/ExpensesTemplate';
-import { useCreateExpense } from '../hooks/useExpenses';
+import { useCreateMovements } from '../hooks/useMovements';
 import { useAccounts } from '../hooks/useAccount';
 
 const ExpensesScreen = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { mutate: saveExpenses, isLoading: isLoadingAddExpeses } = useCreateExpense();
+  const [movement, setMovement] = useState('expenses');
+  const { mutate: saveMovements, isLoading: isLoadingAddExpeses } = useCreateMovements();
   const { data: dataAccount } = useAccounts();
 
-  console.log('isLoadingAddExpeses', isLoadingAddExpeses);
+  const setMovementType = (type: string) => {
+    setMovement(type);
+  };
   const onNewExpenses = (data: any) => {
     const id = uuid.v4();
-    const params = {
+    const paramsMovements = {
       id,
       amount: data.amount,
       date: selectedDate.toISOString().replace(/(\d{4})-(\d{2})-(\d{2}).*/, '$3-$2-$1'),
       account_id: data.account_id,
     };
-    saveExpenses(
-      { expenses_id: id, params },
+    const paramsTransfer = {
+      id,
+      amount: data.amount,
+      date: selectedDate.toISOString().replace(/(\d{4})-(\d{2})-(\d{2}).*/, '$3-$2-$1'),
+      origin_id: data.origin_id,
+      destination_id: data.destination_id,
+    };
+    const params = movement === 'transfers' ? paramsTransfer : paramsMovements;
+    console.log('params', params);
+
+    saveMovements(
+      {
+        expenses_id: id,
+        movement: movement,
+        params,
+      },
       {
         onSuccess: () => {
           Alert.alert('Success', 'expenses created successfully');
@@ -41,6 +58,8 @@ const ExpensesScreen = () => {
         onNewExpenses={onNewExpenses}
         isLoadingAddExpeses={isLoadingAddExpeses}
         dataAccount={dataAccount}
+        setMovementType={setMovementType}
+        movement={movement}
       />
     </SafeAreaView>
   );

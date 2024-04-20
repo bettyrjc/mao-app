@@ -9,7 +9,6 @@ import { COLORS } from '../../constants';
 import { useErrorsContext } from '../../context/ErrorsContext';
 import SelectInput from '../inputs/SelectInput';
 import DateInput from '../inputs/DateInput';
-import Cards from '../common/Cards';
 
 const schema = Yup.object().shape({
   // currency: Yup.string().trim('Ingresa una moneda válida').required('La moneda es requerida'),
@@ -22,8 +21,9 @@ type FormData = {
   selectedDate: string;
   setSelectedDate: () => void;
   dataAccount: any;
+  isTransfer: boolean;
 };
-const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate, dataAccount }: FormData) => {
+const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate, dataAccount, isTransfer }: FormData) => {
   const { error } = useErrorsContext();
   const {
     control,
@@ -40,46 +40,78 @@ const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate, d
 
   return (
     <View style={styles.container}>
-      <Cards>
-        <Controller
-          control={control}
-          name="amount"
-          render={({ field: { onChange, value } }) => (
-            <InputText
-              value={value}
-              onChangeText={(text) => onChange(text)}
-              error={errors.amount?.message || error?.amount}
-              placeholder="3000"
-              label="Amount"
-              isBorderFull={false}
-            />
-          )}
-        />
-        <View style={styles.separator} />
+      <Controller
+        control={control}
+        name="amount"
+        render={({ field: { onChange, value } }) => (
+          <InputText
+            value={value}
+            onChangeText={(text) => onChange(text)}
+            error={errors.amount?.message || error?.amount}
+            placeholder="3000"
+            label="Monto"
+            isBorderFull={false}
+          />
+        )}
+      />
+      <View style={styles.separator} />
 
-        <Controller
-          control={control}
-          name="date"
-          render={({ field: { onChange, value } }) => (
-            <DateInput
-              value={value}
-              onChangeText={(text: any) => onChange(text)}
-              error={errors.name?.message || error.name}
-              placeholder="Mercantil banco"
-              label="Date"
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-            />
-          )}
-        />
+      <Controller
+        control={control}
+        name="date"
+        render={({ field: { onChange, value } }) => (
+          <DateInput
+            value={value}
+            onChangeText={(text: any) => onChange(text)}
+            error={errors.name?.message || error.name}
+            placeholder="Mercantil banco"
+            label="Fecha"
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          />
+        )}
+      />
 
-        <View style={styles.separator} />
+      <View style={styles.separator} />
+
+      {isTransfer ? (
+        <>
+          <Controller
+            control={control}
+            name="origin_id"
+            render={({ field: { onChange, value } }) => (
+              <SelectInput
+                label="Origen"
+                options={options}
+                selectedValue={value}
+                onValueChange={(selectedValue) => onChange(selectedValue)}
+                placeholder="Seleciona"
+                error={errors.currency?.message}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="destination_id"
+            render={({ field: { onChange, value } }) => (
+              <SelectInput
+                label="Destino"
+                options={options}
+                selectedValue={value}
+                onValueChange={(selectedValue) => onChange(selectedValue)}
+                placeholder="Seleciona"
+                error={errors.currency?.message}
+              />
+            )}
+          />
+        </>
+      ) : (
         <Controller
           control={control}
           name="account_id"
           render={({ field: { onChange, value } }) => (
             <SelectInput
-              label="Account"
+              label="Cuenta"
               options={options}
               selectedValue={value}
               onValueChange={(selectedValue) => onChange(selectedValue)}
@@ -88,17 +120,17 @@ const AddExpensesForm = ({ onSubmit, isLoading, selectedDate, setSelectedDate, d
             />
           )}
         />
+      )}
 
-        <View style={styles.containedButton}>
-          <ContainedButton
-            onPress={handleSubmit(onSubmit)}
-            title="Save"
-            isFulled={true}
-            isLoading={isLoading}
-            backgroundColor={COLORS.secondary}
-          />
-        </View>
-      </Cards>
+      <View style={styles.containedButton}>
+        <ContainedButton
+          onPress={handleSubmit(onSubmit)}
+          title="Save"
+          isFulled={true}
+          isLoading={isLoading}
+          backgroundColor={COLORS.secondary}
+        />
+      </View>
     </View>
   );
 };

@@ -16,7 +16,6 @@ const RegisterScreen = ({ navigation }: Props) => {
   const onSubmit = (data: any) => {
     const { name, email, last_name, password, pronoun } = data;
     const id = uuid.v4();
-    console.log('id', id);
     signUp({
       id,
       name,
