@@ -6,7 +6,6 @@ export function useCreateMovements() {
 
   return useMutation(
     ({ expenses_id, movement, ...data }: any) => {
-      console.log('response', data.params);
       return financeApi.post(`/api/v1/movements/${movement}/${expenses_id}`, {
         ...data.params,
       });

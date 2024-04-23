@@ -25,15 +25,16 @@ const WalletsCard = ({ handleOpenAddBank, dataAccount }: WalletsCardProps) => {
   return (
     <Cards>
       <View style={styles.titleBox}>
-        <Text style={styles.title}>Wallets</Text>
+        <Text style={styles.title}>Cuentas</Text>
         <Text style={[styles.title, styles.totalMoney]}>
-          Total: {result?.[0].total} {result?.[0].currency}
+          Total: {result?.[0].total.toLocaleString('en-US', { style: 'currency', currency: result?.[0].currency })}{' '}
+          {/* {result?.[0].currency} */}
         </Text>
       </View>
       <View style={styles.box}>
         <Pressable style={[styles.buttonContainer, styles.buttonAdd]} onPress={handleOpenAddBank}>
           <Icon name="add-circle" size={45} color={COLORS.secondary} />
-          <Text style={[styles.textAdd]}>Add</Text>
+          <Text style={[styles.textAdd]}>Añadir</Text>
         </Pressable>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {dataAccount?.data?.map((wallet: any, index: string) => (
@@ -41,7 +42,9 @@ const WalletsCard = ({ handleOpenAddBank, dataAccount }: WalletsCardProps) => {
               <View style={styles.iconButtonWallet}>
                 <Icon name="wallet-outline" size={25} color={COLORS.white} />
               </View>
-              <Text style={[styles.textWallet]}>{wallet.name}</Text>
+              <Text style={[styles.textWallet]} numberOfLines={1} ellipsizeMode="tail">
+                {wallet.name}
+              </Text>
               <Text style={[styles.textWallet, styles.textMoney]}>
                 {wallet.balance} {wallet.currency}
               </Text>

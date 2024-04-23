@@ -62,7 +62,7 @@ const OutlinedButton: React.FC<OutlinedButtonProps> = ({
               ...buttonStyles.text,
               color: textColor,
               fontWeight: weight || '700',
-              marginLeft: iconName ? 10 : '',
+              marginLeft: iconName ? 10 : 0,
             }}
           >
             {title}

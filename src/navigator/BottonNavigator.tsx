@@ -25,7 +25,7 @@ const BottonNavigator = () => {
         name="Home"
         component={DashboardScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Inicio',
           tabBarIcon: ({ color, size }: any) => <Icon name="home-outline" size={size} color={color} />,
           tabBarActiveTintColor: '#FF792E',
         }}
@@ -48,7 +48,7 @@ const BottonNavigator = () => {
         name="User"
         component={UserScreen}
         options={{
-          tabBarLabel: 'User',
+          tabBarLabel: 'Cuenta',
           tabBarIcon: ({ color, size }: any) => <Icon name="person-outline" size={size} color={color} />,
           tabBarActiveTintColor: '#FF792E',
         }}

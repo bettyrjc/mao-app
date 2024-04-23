@@ -27,7 +27,7 @@ const DashboardScreen = () => {
           Alert.alert('Success', 'account created successfully');
         },
         onError: (error: any) => {
-          console.log('____ERROR___', error.response.data);
+          console.error('____ERROR___', error.response.data);
           Alert.alert('Error', 'Error al crear de datos bancarios');
         },
       }
@@ -39,7 +39,7 @@ const DashboardScreen = () => {
         onNewAccount={onNewAccount}
         isLoadingAddAccount={isLoadingAddAccount}
         dataAccount={dataAccount}
-        dataMovements={movements?.data}
+        dataMovements={movements?.data || []}
       />
     </SafeAreaView>
   );
