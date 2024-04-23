@@ -8,13 +8,11 @@ export const getUser = async () => {
 
   const userId: any = await AsyncStorage.getItem('user_id');
   const id = JSON.parse(userId);
-  console.log('userId', `/api/v1/users/${id}`);
-  console.log('userId', id);
   try {
     const data = await financeApi.get(`/api/v1/users/${id}`);
     // setUser(data);
     return data.data;
   } catch (e: any) {
-    console.log('error getUser', e.response);
+    console.error('error getUser', e.response);
   }
 };

@@ -1,11 +1,12 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Table, Row } from 'react-native-table-component';
+
 import WalletsCard from '../utils/cards/WalletsCard';
 import ButtonResumen from '../utils/buttons/ButtonResumen';
 import AddAccountModal from '../utils/modals/AddAccountModal';
 import Cards from '../utils/common/Cards';
-import { Table, Row } from 'react-native-table-component';
-import { COLOR_OPACITY, GRAY_COLORS } from '../constants';
+import { GRAY_COLORS } from '../constants';
 type DashboardTemplateProps = {
   onNewAccount: (data: any) => void;
   isLoadingAddAccount: boolean;

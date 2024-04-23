@@ -8,14 +8,13 @@ import { COLORS, GRAY_COLORS } from '../../constants';
 import { useUserContext } from '../../context/UserContext';
 
 type NavbarPropTypes = {
-  title: string;
+  title?: string;
 };
 const Navbar = ({ title = 'nombre' }: NavbarPropTypes) => {
   // const navigation = useNavigation<any>();
   const { user } = useUserContext();
-  console.log(title);
   //todo this is losing when i recharge
-
+  console.log('title', title);
   // useEffect(() => {
   //   const getUser = async () => {
   //     try {

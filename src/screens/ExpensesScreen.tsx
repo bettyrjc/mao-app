@@ -30,7 +30,6 @@ const ExpensesScreen = () => {
       destination_id: data.destination_id,
     };
     const params = movement === 'transfers' ? paramsTransfer : paramsMovements;
-    console.log('params', params);
 
     saveMovements(
       {
@@ -43,7 +42,7 @@ const ExpensesScreen = () => {
           Alert.alert('Success', 'expenses created successfully');
         },
         onError: (error: any) => {
-          console.log('____ERROR___', error.response.data);
+          console.error('____ERROR___', error.response.data);
           Alert.alert('Error', 'Error al crear gastos');
         },
       }

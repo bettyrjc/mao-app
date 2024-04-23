@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }: any) => {
         const token = await AsyncStorage.getItem('token');
         const user_id = await AsyncStorage.getItem('user_id');
         if (token && user_id) {
-          console.log('entroo');
           dispatch({
             type: 'signIn',
             payload: {
@@ -65,7 +64,6 @@ export const AuthProvider = ({ children }: any) => {
 
   const signUp = async (info: any) => {
     const { name, last_name, email, pronoun, password, id } = info;
-    console.log('info', info);
 
     setIsLoading(true);
     try {
@@ -86,7 +84,7 @@ export const AuthProvider = ({ children }: any) => {
         password,
       });
     } catch (error: any) {
-      console.log('error?.response.data.errors', error?.response);
+      console.error('error?.response.data.errors', error?.response);
       // Alert.alert('Error😔', error);
       setIsLoading(false);
     }
@@ -102,7 +100,7 @@ export const AuthProvider = ({ children }: any) => {
       return data;
     } catch (e: any) {
       setIsLoadingUser(false);
-      console.log('error getUser', e.response);
+      console.error('error getUser', e.response);
     }
   };
 
@@ -128,10 +126,9 @@ export const AuthProvider = ({ children }: any) => {
       getUser(data?.user_id);
       setIsLoading(false);
     } catch (error: any) {
-      console.log('_______error sign in_______', error?.response.data.errors);
+      console.error('_______error sign in_______', error?.response.data.errors);
 
       setIsLoading(false);
-      console.log(error?.response.data.errors);
       setErrors(error.response.data.errors);
       Alert.alert('Error login', error.response.data.errors[0].detail);
     }
