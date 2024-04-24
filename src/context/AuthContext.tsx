@@ -85,7 +85,8 @@ export const AuthProvider = ({ children }: any) => {
       });
     } catch (error: any) {
       console.error('error?.response.data.errors', error?.response);
-      // Alert.alert('Error😔', error);
+      Alert.alert('Error login', error?.response.data?.detail?.[0]?.msg);
+      setErrors(error.response.data?.detail);
       setIsLoading(false);
     }
   };
@@ -126,11 +127,10 @@ export const AuthProvider = ({ children }: any) => {
       getUser(data?.user_id);
       setIsLoading(false);
     } catch (error: any) {
-      console.error('_______error sign in_______', error?.response.data.errors);
-
+      console.error('error?.response.data.errors', error?.response.data?.detail);
+      setErrors(error.response.data?.detail);
+      Alert.alert('Error login', error?.response.data?.detail?.[0]?.msg);
       setIsLoading(false);
-      setErrors(error.response.data.errors);
-      Alert.alert('Error login', error.response.data.errors[0].detail);
     }
   };
 

@@ -10,7 +10,7 @@ import CategoriesForm from '../utils/forms/CategoriesForm';
 const TextContent = ({ name, text }: any) => {
   return (
     <View style={{ display: 'flex', flexDirection: 'row' }}>
-      <Text style={{ fontWeight: 'bold', marginRight: 5, marginBottom: 7, fontSize: 16 }}>{name}:</Text>
+      <Text style={{ fontWeight: '600', marginRight: 5, marginBottom: 7, fontSize: 16 }}>{name}:</Text>
       <Text style={{ fontSize: 16 }}>{text}</Text>
     </View>
   );
@@ -32,7 +32,7 @@ const UserScreen = () => {
         >
           <Text
             style={{
-              fontWeight: 'bold',
+              fontWeight: '600',
               marginRight: 2,
               fontSize: 20,
               paddingBottom: 3,
@@ -73,7 +73,7 @@ const UserScreen = () => {
       </Cards>
 
       <Pressable style={styles.boxButton} onPress={logOut}>
-        <Text style={styles.textButton}>Logout</Text>
+        <Text style={styles.textButton}>Cerrar sesión</Text>
       </Pressable>
     </SafeAreaView>
   );

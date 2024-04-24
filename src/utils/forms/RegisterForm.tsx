@@ -56,7 +56,7 @@ const RegisterForm = ({ onSubmit, navigation, isLoading }: FormData) => {
           <InputText
             value={value}
             onChangeText={(text) => onChange(text)}
-            error={errors.name?.message || error.name}
+            error={errors.name?.message || error?.name}
             placeholder="Maria"
             label="Nombre"
             isBorderFull={false}
@@ -92,7 +92,7 @@ const RegisterForm = ({ onSubmit, navigation, isLoading }: FormData) => {
             selectedValue={value}
             onValueChange={(selectedValue) => onChange(selectedValue)}
             placeholder="Seleciona"
-            error={errors.pronoun?.message}
+            error={errors.pronoun?.message || error?.pronoun}
           />
         )}
       />
@@ -104,7 +104,7 @@ const RegisterForm = ({ onSubmit, navigation, isLoading }: FormData) => {
             value={value}
             keyboardType="email-address"
             onChangeText={(text) => onChange(text)}
-            error={errors.email?.message || error.email}
+            error={errors.email?.message || error?.email}
             placeholder="maria@gmail.com"
             label="Correo electrónico"
             isBorderFull={false}
@@ -120,7 +120,7 @@ const RegisterForm = ({ onSubmit, navigation, isLoading }: FormData) => {
           <PasswordInput
             value={value}
             onChangeText={(text) => onChange(text)}
-            error={errors.password?.message || error.password}
+            error={errors.password?.message || error?.password}
           />
         )}
       />
