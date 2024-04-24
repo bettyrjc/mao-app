@@ -12,6 +12,8 @@ type DashboardTemplateProps = {
   isLoadingAddAccount: boolean;
   dataAccount: any;
   dataMovements: any[];
+  setOpenAddBank: (value: boolean) => void;
+  openAddBank: boolean;
 };
 
 const DashboardTemplate = ({
@@ -19,11 +21,12 @@ const DashboardTemplate = ({
   isLoadingAddAccount,
   dataAccount,
   dataMovements,
+  setOpenAddBank,
+  openAddBank,
 }: DashboardTemplateProps) => {
   const tableHead = ['Fecha', 'Monto', 'Tipo'];
   const tableData = dataMovements?.map((item) => [item.date, item.amount.toString(), item.type]) || [];
 
-  const [openAddBank, setOpenAddBank] = React.useState(false);
   const handleOpenAddBank = () => {
     setOpenAddBank(!openAddBank);
   };

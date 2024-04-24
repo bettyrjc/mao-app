@@ -6,11 +6,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import DashboardTemplate from '../templates/DashboardTemplate';
 import { useAccounts, useCreateAccount } from '../hooks/useAccount';
 import { useMovements } from '../hooks/useMovements';
+import { useErrorsContext } from '../context/ErrorsContext';
 
 const DashboardScreen = () => {
   const { mutate: saveAccount, isLoading: isLoadingAddAccount } = useCreateAccount();
   const { data: dataAccount } = useAccounts();
   const { data: movements, isLoading: isLoadingGetProfits } = useMovements();
+  const [openAddBank, setOpenAddBank] = React.useState(false);
+  const { setErrors } = useErrorsContext();
+
   const onNewAccount = (data: any) => {
     const id = uuid.v4();
     const params = {
@@ -25,9 +29,11 @@ const DashboardScreen = () => {
       {
         onSuccess: () => {
           Alert.alert('Success', 'account created successfully');
+          setOpenAddBank(false);
         },
         onError: (error: any) => {
           console.error('____ERROR___', error.response.data);
+          setErrors(error.response.data?.detail);
           Alert.alert('Error', 'Error al crear de datos bancarios');
         },
       }
@@ -40,6 +46,8 @@ const DashboardScreen = () => {
         isLoadingAddAccount={isLoadingAddAccount}
         dataAccount={dataAccount}
         dataMovements={movements?.data || []}
+        openAddBank={openAddBank}
+        setOpenAddBank={setOpenAddBank}
       />
     </SafeAreaView>
   );

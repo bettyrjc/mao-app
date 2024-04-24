@@ -73,7 +73,7 @@ const AddAccountForm = ({ onSubmit, isLoading }: FormData) => {
             selectedValue={value}
             onValueChange={(selectedValue) => onChange(selectedValue)}
             placeholder="Seleciona"
-            error={errors.currency?.message}
+            error={errors.currency?.message || error?.currency}
           />
         )}
       />
