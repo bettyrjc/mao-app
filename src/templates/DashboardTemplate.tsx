@@ -32,15 +32,19 @@ const DashboardTemplate = ({
     <View>
       <WalletsCard handleOpenAddBank={handleOpenAddBank} dataAccount={dataAccount} />
       <Cards>
-        <Text style={styles.title}>📝 Ver Resumen</Text>
+        <Text style={styles.title}>📝 Resumen</Text>
         <ButtonResumen />
         <ScrollView>
-          <Table>
-            <Row data={tableHead} style={styles.head} textStyle={styles.text} />
-            {tableData?.map((rowData, index) => (
-              <Row key={index} data={rowData} style={styles.row} textStyle={styles.text} />
-            ))}
-          </Table>
+          {tableData.length > 0 ? (
+            <Table>
+              <Row data={tableHead} style={styles.head} textStyle={styles.text} />
+              {tableData?.map((rowData, index) => (
+                <Row key={index} data={rowData} style={styles.row} textStyle={styles.text} />
+              ))}
+            </Table>
+          ) : (
+            <Text style={styles.notData}>No hay movimientos</Text>
+          )}
         </ScrollView>
       </Cards>
 
@@ -68,4 +72,11 @@ const styles = StyleSheet.create({
   border: { borderColor: GRAY_COLORS.gray500, borderWidth: 1 },
   text: { textAlign: 'center' },
   row: { height: 30 },
+  notData: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: GRAY_COLORS.gray500,
+    marginBottom: 20,
+    marginTop: 20,
+  },
 });

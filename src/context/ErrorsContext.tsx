@@ -27,7 +27,15 @@ export const ErrorsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [error, setError] = useState<Record<any, any>>({});
 
   const setErrors = (errorArray: Error[]) => {
-    setError(errorArray);
+    const errorObject: Record<any, any> = errorArray.reduce((acc: any, error: any) => {
+      if (error.source) {
+        acc[error.source] = error.msg;
+      }
+
+      return acc;
+    }, {});
+
+    setError(errorObject);
   };
 
   return <ErrorsContext.Provider value={{ error, setErrors }}>{children}</ErrorsContext.Provider>;

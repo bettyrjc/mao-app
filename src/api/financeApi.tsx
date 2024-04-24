@@ -16,6 +16,7 @@ const financeApi = axios.create({
 
 financeApi.interceptors.request.use(async (config) => {
   const token = await AsyncStorage.getItem('token'); // Obtén el token almacenado
+  console.log(token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`; // Agrega el token a la cabecera de la solicitud
   }

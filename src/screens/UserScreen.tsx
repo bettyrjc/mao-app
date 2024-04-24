@@ -1,10 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import React, { useContext } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import Cards from '../utils/common/Cards';
 import { useUserContext } from '../context/UserContext';
 import { COLORS, GRAY_COLORS } from '../constants';
 import { AuthContext } from '../context/AuthContext';
+import CategoriesForm from '../utils/forms/CategoriesForm';
 
 const TextContent = ({ name, text }: any) => {
   return (
@@ -16,23 +17,24 @@ const TextContent = ({ name, text }: any) => {
 };
 const UserScreen = () => {
   const { user } = useUserContext();
-  console.log(user)
   const { logOut } = useContext(AuthContext);
+
   return (
     <SafeAreaView style={styles.box}>
       <Cards>
         <View
           style={{
             borderBottomWidth: 2,
-            borderBottomColor: GRAY_COLORS.gray200,
+            borderBottomColor: GRAY_COLORS.gray100,
             marginBottom: 10,
+            marginTop: 5,
           }}
         >
           <Text
             style={{
               fontWeight: 'bold',
               marginRight: 2,
-              fontSize: 24,
+              fontSize: 20,
               paddingBottom: 3,
             }}
           >
@@ -45,13 +47,13 @@ const UserScreen = () => {
           <TextContent text={user?.email} name={'Email'} />
         </View>
       </Cards>
+      <View style={styles.separator} />
 
-      {/* <Cards>
+      <Cards>
         <View
           style={{
-            borderBottomWidth: 1,
-            borderBottomColor: GRAY_COLORS.gray200,
-            marginBottom: 10,
+            marginTop: 10,
+            marginBottom: 20,
           }}
         >
           <Text
@@ -66,11 +68,9 @@ const UserScreen = () => {
           </Text>
         </View>
         <View>
-          <TextContent text={user?.name} name={'Nombre'} />
-          <TextContent text={user?.last_name} name={'Apellido'} />
-          <TextContent text={user?.email} name={'Email'} />
+          <CategoriesForm />
         </View>
-      </Cards> */}
+      </Cards>
 
       <Pressable style={styles.boxButton} onPress={logOut}>
         <Text style={styles.textButton}>Logout</Text>
@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  separator: {
+    marginBottom: 20,
   },
 });
 export default UserScreen;

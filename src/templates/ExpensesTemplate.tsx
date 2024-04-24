@@ -8,11 +8,10 @@ import Cards from '../utils/common/Cards';
 const ExpensesTemplate = ({
   selectedDate,
   setSelectedDate,
-  onNewExpenses,
-  isLoadingAddExpeses,
   dataAccount,
   setMovementType,
   movement,
+  categories,
 }: any) => {
   return (
     <View>
@@ -52,11 +51,11 @@ const ExpensesTemplate = ({
         <View style={styles.separator} />
         <AddExpensesForm
           dataAccount={dataAccount}
-          onSubmit={onNewExpenses}
-          isLoading={isLoadingAddExpeses}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           isTransfer={movement === 'transfers'}
+          categories={categories}
+          movement={movement}
         />
       </Cards>
     </View>
