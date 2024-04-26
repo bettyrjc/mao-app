@@ -19,9 +19,9 @@ const DashboardScreen = () => {
     const id = uuid.v4();
     const params = {
       id,
-      name: data.name,
-      balance: data.balance,
-      currency: data.currency,
+      name: data?.name,
+      balance: data?.balance,
+      currency: data?.currency,
     };
 
     saveAccount(

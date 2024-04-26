@@ -44,7 +44,6 @@ const AddExpensesForm = ({
     value: item.id,
   }));
   const { error, setErrors } = useErrorsContext();
-  console.log('error', error);
   const {
     control,
     handleSubmit,

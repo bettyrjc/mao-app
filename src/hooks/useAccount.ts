@@ -24,7 +24,7 @@ export const useAccounts = () => {
       const res = await financeApi.get('/api/v1/accounts');
       return res;
     } catch (error) {
-      console.error('error in account', error);
+      console.error('error in account', error?.response?.data?.detail);
       throw error; // Lanza el error para que React Query lo maneje
     }
   });

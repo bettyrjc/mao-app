@@ -39,7 +39,7 @@ const AddAccountForm = ({ onSubmit, isLoading }: FormData) => {
             onChangeText={(text) => onChange(text)}
             error={errors.name?.message || error.name}
             placeholder="Mercantil banco"
-            label="Account name"
+            label="Nombre de la cuenta"
             isBorderFull={false}
           />
         )}
@@ -54,7 +54,7 @@ const AddAccountForm = ({ onSubmit, isLoading }: FormData) => {
             onChangeText={(text) => onChange(text)}
             error={errors.balance?.message || error?.balance}
             placeholder="3000"
-            label="Current balance"
+            label="Balance inicial"
             isBorderFull={false}
           />
         )}
@@ -81,7 +81,7 @@ const AddAccountForm = ({ onSubmit, isLoading }: FormData) => {
       <View style={styles.containedButton}>
         <ContainedButton
           onPress={handleSubmit(onSubmit)}
-          title="Save"
+          title="Guardar"
           isFulled={true}
           isLoading={isLoading}
           backgroundColor={COLORS.secondary}

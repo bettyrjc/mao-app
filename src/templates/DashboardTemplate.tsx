@@ -33,12 +33,12 @@ const DashboardTemplate = ({
 
   return (
     <View>
-      <WalletsCard handleOpenAddBank={handleOpenAddBank} dataAccount={dataAccount} />
+      <WalletsCard handleOpenAddBank={handleOpenAddBank} dataAccount={dataAccount || []} />
       <Cards>
         <Text style={styles.title}>📝 Resumen</Text>
         <ButtonResumen />
         <ScrollView>
-          {tableData.length > 0 ? (
+          {tableData?.length > 0 ? (
             <Table>
               <Row data={tableHead} style={styles.head} textStyle={styles.text} />
               {tableData?.map((rowData, index) => (

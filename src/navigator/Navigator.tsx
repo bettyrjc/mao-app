@@ -16,6 +16,7 @@ const Navigator = () => {
   if (status === 'authenticated' && !isLoadingUser) {
     return <BottonNavigator />;
   }
+  console.log(status)
 
   return (
     <Stack.Navigator

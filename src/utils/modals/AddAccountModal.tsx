@@ -16,7 +16,7 @@ const AddAccountModal = ({
   openAddBank,
   handleModalOpenAddBank,
   onSubmitData,
-  title = 'Add wallet',
+  title = 'Agregar cuenta bancaria',
 }: AddAccountModalProps) => {
   return (
     <ModalView modalVisible={openAddBank} handleModal={handleModalOpenAddBank}>
