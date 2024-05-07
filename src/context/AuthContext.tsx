@@ -115,6 +115,7 @@ export const AuthProvider = ({ children }: any) => {
       });
       const data = response?.data;
       await AsyncStorage.setItem('token', data?.access_token);
+      await AsyncStorage.setItem('refresh_token', data?.refresh_token);
       await AsyncStorage.setItem('expires_at', JSON.stringify(data?.expires_at));
       await AsyncStorage.setItem('user_id', JSON.stringify(data?.user_id));
       dispatch({
