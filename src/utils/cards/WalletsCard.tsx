@@ -27,7 +27,7 @@ const WalletsCard = ({ handleOpenAddBank, dataAccount }: WalletsCardProps) => {
       <View style={styles.titleBox}>
         <Text style={styles.title}>Cuentas</Text>
         <Text style={[styles.title, styles.totalMoney]}>
-          Total: {result?.[0].total.toLocaleString('en-US', { style: 'currency', currency: result?.[0].currency })}{' '}
+          Total: {result?.[0]?.total.toLocaleString('en-US', { style: 'currency', currency: result?.[0].currency })}{' '}
           {/* {result?.[0].currency} */}
         </Text>
       </View>

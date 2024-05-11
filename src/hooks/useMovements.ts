@@ -58,3 +58,17 @@ export const useMovements = () => {
     }
   });
 };
+export const useMovement = (id: string) => {
+  return useQuery(['movement', id], async () => {
+    if (!id) {
+      return;
+    }
+    try {
+      const res = await financeApi.get(`/api/v1/movements/${id}`);
+      return res;
+    } catch (error) {
+      console.error('error in movement', error);
+      throw error; // Lanza el error para que React Query lo maneje
+    }
+  });
+};

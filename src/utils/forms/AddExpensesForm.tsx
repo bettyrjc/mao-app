@@ -58,6 +58,7 @@ const AddExpensesForm = ({
       destination_id: options?.[0]?.value,
       category_id: categoriesOptions?.[0]?.value,
       date: selectedDate,
+      description: '',
     },
   });
 
@@ -69,6 +70,7 @@ const AddExpensesForm = ({
       date: selectedDate.toISOString().replace(/(\d{4})-(\d{2})-(\d{2}).*/, '$3-$2-$1'),
       account_id: data.account_id,
       category_id: data.category_id,
+      description: data.description,
     };
     const paramsTransfer = {
       id,
@@ -76,6 +78,7 @@ const AddExpensesForm = ({
       date: selectedDate.toISOString().replace(/(\d{4})-(\d{2})-(\d{2}).*/, '$3-$2-$1'),
       origin_id: data.origin_id,
       destination_id: data.destination_id,
+      description: data.description,
     };
     const params = movement === 'transfers' ? paramsTransfer : paramsMovements;
 
@@ -87,12 +90,14 @@ const AddExpensesForm = ({
       },
       {
         onSuccess: () => {
-          Alert.alert('Success', 'expenses created successfully');
+          Alert.alert('Success', 'Movimiento agredado correctamente🎉');
           reset();
         },
         onError: (e: any) => {
+          console.log(e.response.data);
           setErrors(e.response.data?.detail);
-          Alert.alert('Error', 'Error al crear gastos');
+          const text = e.response.data?.detail?.[0]?.msg;
+          Alert.alert('Error', text || 'Error al crear gastos🥲');
         },
       }
     );
@@ -123,7 +128,7 @@ const AddExpensesForm = ({
           <DateInput
             value={value}
             onChangeText={(text: any) => onChange(text)}
-            error={errors.date?.message || error.date}
+            error={errors?.date?.message || error?.date}
             placeholder="Mercantil banco"
             label="Fecha"
             selectedDate={selectedDate}
@@ -201,6 +206,20 @@ const AddExpensesForm = ({
         </>
       )}
 
+      <Controller
+        control={control}
+        name="description"
+        render={({ field: { onChange, value } }) => (
+          <InputText
+            value={value}
+            onChangeText={(text) => onChange(text)}
+            error={errors.description?.message || error?.description}
+            placeholder="gastos en comida"
+            label="Descripción"
+            isBorderFull={false}
+          />
+        )}
+      />
       <View style={styles.containedButton}>
         <ContainedButton
           onPress={handleSubmit(onNewExpenses)}

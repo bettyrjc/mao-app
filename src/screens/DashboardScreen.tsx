@@ -5,15 +5,30 @@ import uuid from 'react-native-uuid';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DashboardTemplate from '../templates/DashboardTemplate';
 import { useAccounts, useCreateAccount } from '../hooks/useAccount';
-import { useMovements } from '../hooks/useMovements';
+import { useMovement, useMovements } from '../hooks/useMovements';
 import { useErrorsContext } from '../context/ErrorsContext';
 
 const DashboardScreen = () => {
+  const { setErrors } = useErrorsContext();
   const { mutate: saveAccount, isLoading: isLoadingAddAccount } = useCreateAccount();
   const { data: dataAccount } = useAccounts();
-  const { data: movements, isLoading: isLoadingGetProfits } = useMovements();
+  const { data: movements, isLoading: isLoadingMovements } = useMovements();
+
   const [openAddBank, setOpenAddBank] = React.useState(false);
-  const { setErrors } = useErrorsContext();
+  const [openDetailModal, setOpenDetailModal] = React.useState(false);
+  const [idDetail, setIdDetail] = React.useState('');
+
+  const { data: movement, isLoading } = useMovement(idDetail);
+
+  const handleOpenDetailModal = (id: string) => {
+    setOpenDetailModal(true);
+    setIdDetail(id);
+  };
+
+  const handleCloseDetailModal = () => {
+    setOpenDetailModal(!openDetailModal);
+    setIdDetail('');
+  };
 
   const onNewAccount = (data: any) => {
     const id = uuid.v4();
@@ -44,10 +59,16 @@ const DashboardScreen = () => {
       <DashboardTemplate
         onNewAccount={onNewAccount}
         isLoadingAddAccount={isLoadingAddAccount}
+        isLoadingMovements={isLoadingMovements}
         dataAccount={dataAccount}
         dataMovements={movements?.data || []}
         openAddBank={openAddBank}
         setOpenAddBank={setOpenAddBank}
+        handleOpenDetailModal={handleOpenDetailModal}
+        handleCloseDetailModal={handleCloseDetailModal}
+        movement={movement}
+        openDetailModal={openDetailModal}
+        isLoading={isLoading}
       />
     </SafeAreaView>
   );

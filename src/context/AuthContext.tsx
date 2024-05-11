@@ -112,6 +112,7 @@ export const AuthProvider = ({ children }: any) => {
       const response = await authApi.post<any>('/api/v1/sign-in', {
         username: username,
         password: password,
+        grant_type: 'password',
       });
       const data = response?.data;
       await AsyncStorage.setItem('token', data?.access_token);
